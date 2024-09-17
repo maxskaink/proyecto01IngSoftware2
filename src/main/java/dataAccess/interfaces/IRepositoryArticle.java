@@ -5,7 +5,7 @@ import models.Article;
 import java.util.List;
 
 public interface IRepositoryArticle {
-    public boolean addArticulo(Article article);
-    public List<Article> getArticlesByConference(int idConference);
-    public List<Article> getArticleByAuthor(int idAuthor);
+    boolean addArticulo(Article article);
+    List<Article> getArticlesByConference(int idConference);
+    List<Article> getArticleByAuthor(int idAuthor);
 }

@@ -15,9 +15,6 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
     
     private ArrayList<Conference> conferences;
 
-    /**
-    * @brief Repository to manage Conference in ArrayLists
-    */
     public RepositoryConferenceArrayList() {
         this.conferences = new ArrayList<>();
     }
@@ -28,7 +25,7 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
 
     @Override
     public List<Conference> getConferences() {
-        return (List<Conference>) this.conferences; 
+        return this.conferences;
     }
 
     /**

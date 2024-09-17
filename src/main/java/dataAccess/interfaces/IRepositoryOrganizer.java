@@ -3,6 +3,6 @@ package dataAccess.interfaces;
 import models.Organizer;
 
 public interface IRepositoryOrganizer {
-    public boolean addOrganizer(Organizer organizer);
-    public Organizer getOrganizerByID(int idOrganizer);
+    boolean addOrganizer(Organizer organizer);
+    Organizer getOrganizerByID(int idOrganizer);
 }

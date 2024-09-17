@@ -9,12 +9,9 @@ import models.Conference;
 
 import java.util.List;
 
-/**
- * @brief interface to repositories of the models 
- */
 public interface IRepositoryConference {
-    public boolean addConference(Conference conference);
-    public List<Conference> getConferences();
-    public List<Conference> getConferencesByOrganizer(int idOrganizer);
-    public Conference getConferenceById(int idConference);
+    boolean addConference(Conference conference);
+    List<Conference> getConferences();
+    List<Conference> getConferencesByOrganizer(int idOrganizer);
+    Conference getConferenceById(int idConference);
 }

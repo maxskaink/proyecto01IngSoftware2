@@ -30,8 +30,8 @@ public class RepositoryOrganizerArrayList implements IRepositoryOrganizer {
     }
 
     /**
-     * @param idOrganizer
-     * @return
+     * @param idOrganizer Organizer id to search
+     * @return Organizer with idOrganizador
      */
     @Override
     public Organizer getOrganizerByID(int idOrganizer) {

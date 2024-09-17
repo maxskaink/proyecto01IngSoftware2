@@ -27,10 +27,7 @@ public class Proyecto01IngSoftware {
         storageConferences.addConference(objConference);
         
         List<Conference> conferences = storageConferences.listConferences();
-        
-        Author user = new Author("Juan", 10616547 );
-        
-        
+
         
         for( Conference conf: conferences){
             System.out.println("Conferencia: "+ conf.getName());

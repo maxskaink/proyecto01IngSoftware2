@@ -10,9 +10,6 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
 
     private ArrayList<Article> articles;
 
-    /**
-     * @brief Contructor of RepositoryArticleArrayList
-     */
     public RepositoryArticleArrayList(){
         this.articles = new ArrayList<>();
     }
@@ -54,12 +51,12 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
                         article.getIdConferencia())
                 );
 
-        return (List<Article>) foundArticles;
+        return foundArticles;
     }
 
     /**
-     * @param idAuthor
-     * @return
+     * @param idAuthor author id to get
+     * @return author with idAuthor
      */
     @Override
     public List<Article> getArticleByAuthor(int idAuthor) {
@@ -76,6 +73,6 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
                         article.getIdConferencia())
                 );
 
-        return (List<Article>) foundArticles;
+        return foundArticles;
     }
 }
