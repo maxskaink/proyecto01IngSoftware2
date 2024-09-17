@@ -4,5 +4,5 @@ import models.Author;
 
 public interface IRepositoryAuthor {
     public boolean addAuthor(Author author);
-    public Author getAuthorByID(int id);
+    public Author getAuthorByID(int idAuthor);
 }

@@ -15,6 +15,7 @@ public class Conference {
     private String place;
     private String topic;
     private int idConference;
+    private int idOrganizer;
     private boolean isOpen ;
     
     /**
@@ -25,14 +26,16 @@ public class Conference {
      * @param place Lugar de la conferencia
      * @param topic Tema de la conferencia
      * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
+     * @param idOrganizer Id of creator of the conference
      */
-    public Conference(String name, Date startDate, Date finishDate, String place, String topic, int idConference) {
+    public Conference(String name, Date startDate, Date finishDate, String place, String topic, int idConference, int idOrganizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.place = place;
         this.topic = topic;
         this.idConference = idConference;
+        this.idOrganizer = idOrganizer;
     }
 
     public String getName() {
@@ -75,5 +78,12 @@ public class Conference {
         this.idConference = idConference;
     }
     public boolean isOpen(){return this.isOpen;}
+    public int getIdOrganizer() {
+        return idOrganizer;
+    }
+
+    public void setIdOrganizer(int idOrganizer) {
+        this.idOrganizer = idOrganizer;
+    }
     
 }
