@@ -6,25 +6,36 @@
 
 package co.edu.unicauca.proeycto01ingsoftware;
 
+import co.edu.unicauca.mvc.modelos.Article;
+
+import co.edu.unicauca.mvc.modelos.Conference;
+import co.edu.unicauca.mvc.modelos.Author;
 import controllers.ServiceStorageConferences;
 import dataAccess.repositories.RepositoryConferenceArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import models.Conference;
+
+
 
 public class Proyecto01IngSoftware {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         
         ServiceStorageConferences storageConferences = 
                 new ServiceStorageConferences( new RepositoryConferenceArrayList() );
-        
-        storageConferences.addConference(new Conference("prueba", new Date(), new Date(), 100));
+        Conference objConference = new Conference("prueba", new Date(), new Date(), "Popayan", "Gurmet", 1);
+        storageConferences.addConference(objConference);
         
         List<Conference> conferences = storageConferences.listConferences();
         
+        Author user = new Author("Juan", 10616547 );
+        
+        
+        
         for( Conference conf: conferences){
-            System.out.println("Conferencia: "+ conf.getNombre());
+            System.out.println("Conferencia: "+ conf.getName());
         }
         
     }
