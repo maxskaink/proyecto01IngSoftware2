@@ -6,7 +6,7 @@
 package controllers;
 
 import models.Conference;
-import dataAccess.interfaces.IRepository;
+import dataAccess.interfaces.IRepositoryConference;
 import java.util.List;
 
 /**
@@ -15,18 +15,18 @@ import java.util.List;
  */
 public class ServiceStorageConferences {
     
-    private IRepository<Conference> refRepository;
+    private IRepositoryConference refRepository;
     
-    public ServiceStorageConferences(IRepository<Conference> repository){
+    public ServiceStorageConferences(IRepositoryConference repository){
         this.refRepository = repository;
     }
     
     public boolean addConference(Conference obj){
-        return this.refRepository.almacenar(obj);
+        return this.refRepository.addConference(obj);
     }
     
     public List<Conference> listConferences(){
-        return this.refRepository.listar();
+        return this.refRepository.getConferences();
     } 
     
 }
