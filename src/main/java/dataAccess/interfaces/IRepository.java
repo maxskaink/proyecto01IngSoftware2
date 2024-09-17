@@ -8,6 +8,7 @@ package dataAccess.interfaces;
 import java.util.List;
 
 /**
+ * @param <model> modelos de nuestro proyecto
  * @brief interface to repositories of the models 
  */
 public interface IRepository<model> {
