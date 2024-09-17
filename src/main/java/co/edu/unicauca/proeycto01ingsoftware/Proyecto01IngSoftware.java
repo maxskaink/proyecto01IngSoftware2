@@ -6,10 +6,8 @@
 
 package co.edu.unicauca.proeycto01ingsoftware;
 
-import co.edu.unicauca.mvc.modelos.Article;
-
-import co.edu.unicauca.mvc.modelos.Conference;
-import co.edu.unicauca.mvc.modelos.Author;
+import models.Conference;
+import models.Author;
 import controllers.ServiceStorageConferences;
 import dataAccess.repositories.RepositoryConferenceArrayList;
 import java.io.FileNotFoundException;

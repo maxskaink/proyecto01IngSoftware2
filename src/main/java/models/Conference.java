@@ -1,33 +1,46 @@
-/**
- * @file Conference.jva
- * @author Miguel Calambas
- * @brief Class of the abstaction of conference
- */
 
 package models;
 
+
 import java.util.Date;
-
-
+/**
+ *
+ * @author santi
+ */
 public class Conference {
-    private String nombre;
-    private Date startDate;
-    private Date endDate;
-    private float price;
     
-    public Conference(String nombre, Date startDate, Date endDate, float price){
-        this.nombre = nombre;
+    private String name;
+    private Date startDate;
+    private Date finishDate;
+    private String place;
+    private String topic;
+    private int idConference;
+    private boolean isOpen ;
+    
+    /**
+     * 
+     * @param name Nombre de la conferencia 
+     * @param startDate Fecha inicio de la conferencia 
+     * @param finishDate Fecha de finalizacion de la conferencia 
+     * @param place Lugar de la conferencia
+     * @param topic Tema de la conferencia
+     * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
+     */
+    public Conference(String name, Date startDate, Date finishDate, String place, String topic, int idConference) {
+        this.name = name;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.price = price;
+        this.finishDate = finishDate;
+        this.place = place;
+        this.topic = topic;
+        this.idConference = idConference;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getStartDate() {
@@ -37,20 +50,30 @@ public class Conference {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-
-    public Date getEndDate() {
-        return endDate;
+    public Date getFinishDate() {
+        return finishDate;
     }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
     }
-
-    public float getPrice() {
-        return price;
+    public String getPlace() {
+        return place;
     }
-
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPlace(String place) {
+        this.place = place;
     }
+    public String getTopic() {
+        return topic;
+    }
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+    public int getIdConference() {
+        return idConference;
+    }
+    public void setIdConference(int idConference) {
+        this.idConference = idConference;
+    }
+    public boolean isOpen(){return this.isOpen;}
+    
 }

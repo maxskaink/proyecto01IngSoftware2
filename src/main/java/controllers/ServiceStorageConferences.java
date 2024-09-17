@@ -5,7 +5,7 @@
  */
 package controllers;
 
-import co.edu.unicauca.mvc.modelos.Conference;
+import models.Conference;
 import dataAccess.interfaces.IRepository;
 import java.util.List;
 
