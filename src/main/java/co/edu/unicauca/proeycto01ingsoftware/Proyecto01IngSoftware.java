@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Proyecto01IngSoftware {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws IOException {
         
         ServiceStorageConferences storageConferences = 
                 new ServiceStorageConferences( new RepositoryConferenceArrayList() );

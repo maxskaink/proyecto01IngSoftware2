@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ServiceStorageConferences {
     
-    private IRepositoryConference refRepository;
+    private final IRepositoryConference refRepository;
     
     public ServiceStorageConferences(IRepositoryConference repository){
         this.refRepository = repository;

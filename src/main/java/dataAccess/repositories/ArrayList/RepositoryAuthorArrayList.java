@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class RepositoryAuthorArrayList implements IRepositoryAuthor {
 
-    private ArrayList<Author> authors;
+    private final ArrayList<Author> authors;
 
     public RepositoryAuthorArrayList() {
         this.authors = new ArrayList<>();

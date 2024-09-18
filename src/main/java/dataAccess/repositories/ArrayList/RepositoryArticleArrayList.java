@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RepositoryArticleArrayList implements IRepositoryArticle {
 
-    private ArrayList<Article> articles;
+    private final ArrayList<Article> articles;
 
     public RepositoryArticleArrayList(){
         this.articles = new ArrayList<>();

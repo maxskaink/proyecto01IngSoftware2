@@ -16,7 +16,7 @@ public class Conference {
     private String topic;
     private int idConference;
     private int idOrganizer;
-    private boolean isOpen ;
+    private final boolean isOpen ;
     
     /**
      * 

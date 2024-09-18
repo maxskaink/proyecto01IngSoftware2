@@ -77,4 +77,27 @@ class RepositoryConferenceArrayListTest {
         Conference result = repository.getConferenceById(-1);
         assertNull(result);
     }
+    @Test
+    void testUpdateConferenceById_Success(){
+        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        assertTrue(repository.addConference(conference1));
+        Conference conference2 = new Conference("Conference 2", new Date(), new Date(), "Place 2", "Topic 2", 1, 1);
+        assertNotNull(repository.updateConference(conference1.getIdConference(), conference2));
+        Conference updatedConference = repository.getConferenceById(conference2.getIdConference());
+        assertTrue(
+                updatedConference.getName().equals(conference2.getName()) &&
+                        updatedConference.getTopic().equals(conference2.getTopic()) &&
+                        updatedConference.getStartDate().equals(conference2.getStartDate()) &&
+                        updatedConference.getFinishDate().equals(conference2.getFinishDate()) &&
+                        updatedConference.getPlace().equals(conference2.getPlace())
+        );
+    }
+    @Test
+    void testUpdatedConferenceById_Failure(){
+        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        assertTrue(repository.addConference(conference1));
+        assertNull(repository.updateConference(conference1.getIdConference(), null));
+        assertNull(repository.updateConference(-1, conference1));
+        assertNull(repository.updateConference(conference1.getIdConference(), new Conference("",new Date(), new Date(), "", "", 1, 1)));
+    }
 }

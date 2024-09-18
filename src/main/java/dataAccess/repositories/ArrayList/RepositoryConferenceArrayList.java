@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RepositoryConferenceArrayList implements IRepositoryConference {
     
-    private ArrayList<Conference> conferences;
+    private final ArrayList<Conference> conferences;
 
     public RepositoryConferenceArrayList() {
         this.conferences = new ArrayList<>();
@@ -29,7 +29,7 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
     }
 
     /**
-     * @param idOrganizer organizer Id to search
+     * @param idOrganizer organizer id to search
      * @return all the organizer of the organizer id
      */
     @Override
@@ -78,12 +78,71 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
     }
 
     /**
+     * @param idConference  id conference to delete
+     * @return deleted conference
+     */
+    @Override
+    public Conference deleteConferenceById(int idConference) {
+        Conference conferenceToDelete = null;
+        if(idConference <= 0)
+            return null;
+        for(Conference conference : this.conferences)
+            if( conference.getIdConference() == idConference ){
+                conferenceToDelete = conference;
+                break;
+            }
+
+        if(this.conferences.remove(conferenceToDelete))
+            return conferenceToDelete;
+        else
+            return null;
+    }
+
+    /**
+     * @param idConference id conference to update
+     * @param newConference instance of the new conference to add
+     * @return updated conference
+     */
+    @Override
+    public Conference updateConference(int idConference, Conference newConference) {
+        if(newConference == null)
+            return null;
+        if(idConference <= 0)
+            return null;
+
+        newConference.setName(newConference.getName().strip());
+        newConference.setPlace(newConference.getPlace().strip());
+        newConference.setTopic(newConference.getTopic().strip());
+
+        if(newConference.getIdConference() != idConference)
+            return null;
+        if( newConference.getName().compareTo("") == 0 ||
+            newConference.getPlace().compareTo("") == 0 ||
+            newConference.getTopic().compareTo("") == 0 )
+            return null;
+
+        int index = 0;
+        Conference oldConference;
+        for(Conference conference : this.conferences){
+            if(conference.getIdConference() == idConference){
+                oldConference = this.conferences.get(index);
+                this.conferences.set(index, newConference);
+                return oldConference;
+            }
+            index++;
+        }
+
+        return null;
+    }
+
+    /**
      * @param conference The conference to add
-     * @return true if the add is succesfully
+     * @return true if the add is successfully
      */
     @Override
     public boolean addConference(Conference conference) {
-
+        if(conference == null)
+            return false;
         conference.setName(conference.getName().strip());
         conference.setPlace(conference.getPlace().strip());
         conference.setTopic(conference.getTopic().strip());

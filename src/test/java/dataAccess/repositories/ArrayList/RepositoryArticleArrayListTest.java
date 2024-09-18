@@ -26,7 +26,7 @@ class RepositoryArticleArrayListTest {
     @Test
     void testAddArticulo_Failure_DuplicateAuthor() {
         Article article1 = new Article("Article 1", 1, 1);
-        Article article2 = new Article("Article 2", 1, 2);
+        Article article2 = new Article("Article 2", 1, 1);
         repository.addArticulo(article1);
         boolean result = repository.addArticulo(article2);
         assertFalse(result);

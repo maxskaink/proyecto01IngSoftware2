@@ -14,4 +14,6 @@ public interface IRepositoryConference {
     List<Conference> getConferences();
     List<Conference> getConferencesByOrganizer(int idOrganizer);
     Conference getConferenceById(int idConference);
+    Conference deleteConferenceById(int idConference);
+    Conference updateConference(int idConference, Conference newConference);
 }

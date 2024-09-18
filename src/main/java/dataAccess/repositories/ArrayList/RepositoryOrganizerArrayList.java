@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class RepositoryOrganizerArrayList implements IRepositoryOrganizer {
 
-    private ArrayList<Organizer> organizers;
+    private final ArrayList<Organizer> organizers;
     public RepositoryOrganizerArrayList() {
         organizers = new ArrayList<>();
     }
