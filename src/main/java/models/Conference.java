@@ -16,7 +16,7 @@ public class Conference {
     private String topic;
     private int idConference;
     private int idOrganizer;
-    private final boolean isOpen ;
+    private  boolean isOpen ;
     
     /**
      * 
@@ -86,5 +86,7 @@ public class Conference {
     public void setIdOrganizer(int idOrganizer) {
         this.idOrganizer = idOrganizer;
     }
-    
+    public boolean setOpen(boolean open) {
+        return this.isOpen = open;
+    }
 }

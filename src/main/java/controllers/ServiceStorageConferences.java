@@ -21,11 +21,32 @@ public class ServiceStorageConferences extends Subject {
     public ServiceStorageConferences(IRepositoryConference repository){
         this.refRepository = repository;
     }
-    
-    public boolean addConference(Conference obj){
-        return this.refRepository.addConference(obj);
+
+    /**
+     *
+     * @param obj Conference to valid
+     * @return the result of operation
+     */
+    public boolean addConference(Conference obj) {
+        //Valid if the date is correct logic
+        if(obj.getFinishDate().after(obj.getStartDate())){
+            return this.refRepository.addConference(obj);
+        }
+        return false;
     }
-    
+
+    /**
+     * @param id identify of Conference
+     * @return the result of the operation succesfully or failed, in bad case, the function return excepcion
+     */
+    public boolean alterOpenConference(int id) {
+        Conference conference = getConferenceById(id);
+        if (conference == null)
+            throw new IllegalArgumentException("Conference not found with id: " + id);
+        if (conference.isOpen())
+            conference.setOpen(false);
+        return conference.setOpen(true);
+    }
     public List<Conference> listConferences(){
         return this.refRepository.getConferences();
     }
