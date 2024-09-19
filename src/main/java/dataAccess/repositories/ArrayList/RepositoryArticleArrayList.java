@@ -19,7 +19,7 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
      * @return True if add its succesfully
      */
     @Override
-    public boolean addArticulo(Article article) {
+    public boolean addArticle(Article article) {
         article.setName(article.getName().strip());
         for (Article a : this.articles)
             if( a.getIdAutor() == article.getIdAutor() &&

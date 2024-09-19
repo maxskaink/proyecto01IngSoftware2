@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import PObserver.Subject;
 import models.Conference;
 import dataAccess.interfaces.IRepositoryConference;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author calam
  */
-public class ServiceStorageConferences {
+public class ServiceStorageConferences extends Subject {
     
     private final IRepositoryConference refRepository;
     
@@ -27,6 +28,8 @@ public class ServiceStorageConferences {
     
     public List<Conference> listConferences(){
         return this.refRepository.getConferences();
-    } 
-    
+    }
+    public Conference getConferenceById(int id){
+        return this.refRepository.getConferenceById(id);
+    }
 }

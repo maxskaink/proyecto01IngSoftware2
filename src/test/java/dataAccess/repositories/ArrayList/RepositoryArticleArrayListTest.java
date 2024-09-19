@@ -17,32 +17,32 @@ class RepositoryArticleArrayListTest {
         repository = new RepositoryArticleArrayList();
     }
     @Test
-    void testAddArticulo_Success() {
+    void testAddArticle_Success() {
         Article article = new Article("Article 1", 1, 1);
-        boolean result = repository.addArticulo(article);
+        boolean result = repository.addArticle(article);
         assertTrue(result);
     }
 
     @Test
-    void testAddArticulo_Failure_DuplicateAuthor() {
+    void testAddArticle_Failure_DuplicateAuthor() {
         Article article1 = new Article("Article 1", 1, 1);
         Article article2 = new Article("Article 2", 1, 1);
-        repository.addArticulo(article1);
-        boolean result = repository.addArticulo(article2);
+        repository.addArticle(article1);
+        boolean result = repository.addArticle(article2);
         assertFalse(result);
     }
 
     @Test
-    void testAddArticulo_Failure_EmptyName() {
+    void testAddArticle_Failure_EmptyName() {
         Article article = new Article("", 1, 1);
-        boolean result = repository.addArticulo(article);
+        boolean result = repository.addArticle(article);
         assertFalse(result);
     }
 
     @Test
-    void testAddArticulo_Failure_InvalidId() {
+    void testAddArticle_Failure_InvalidId() {
         Article article = new Article("Article 1", -1, 1);
-        boolean result = repository.addArticulo(article);
+        boolean result = repository.addArticle(article);
         assertFalse(result);
     }
 
@@ -50,8 +50,8 @@ class RepositoryArticleArrayListTest {
     void testGetArticlesByConference_Success() {
         Article article1 = new Article("Article 1", 1, 1);
         Article article2 = new Article("Article 2", 2, 1);
-        repository.addArticulo(article1);
-        repository.addArticulo(article2);
+        repository.addArticle(article1);
+        repository.addArticle(article2);
         List<Article> articles = repository.getArticlesByConference(1);
         assertEquals(2, articles.size());
     }
@@ -66,8 +66,8 @@ class RepositoryArticleArrayListTest {
     void testGetArticleByAuthor_Success() {
         Article article1 = new Article("Article 1", 1, 1);
         Article article2 = new Article("Article 2", 1, 2);
-        repository.addArticulo(article1);
-        repository.addArticulo(article2);
+        repository.addArticle(article1);
+        repository.addArticle(article2);
         List<Article> articles = repository.getArticleByAuthor(1);
         assertEquals(2, articles.size());
     }
