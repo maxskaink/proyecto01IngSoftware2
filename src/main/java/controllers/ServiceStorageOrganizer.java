@@ -9,10 +9,10 @@ public class ServiceStorageOrganizer extends Subject {
     public ServiceStorageOrganizer(IRepositoryOrganizer repositoryOrganizer) {
         this.repositoryOrganizer = repositoryOrganizer;
     }
-    boolean addOrganizer(Organizer organizer) {
+    public boolean addOrganizer(Organizer organizer) {
         return repositoryOrganizer.addOrganizer(organizer);
     }
-    Organizer getOrganizer(int id) {
+    public Organizer getOrganizer(int id) {
         return  repositoryOrganizer.getOrganizerByID(id);
     }
 

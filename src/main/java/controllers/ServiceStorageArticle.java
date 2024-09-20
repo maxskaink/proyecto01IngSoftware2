@@ -13,10 +13,10 @@ public class ServiceStorageArticle extends  Subject {
     private IRepositoryArticle refRepository;
     private ServiceStorageConferences objServicesConference;
 
-    public ServiceStorageArticle(IRepositoryArticle repository) {
+    public ServiceStorageArticle(IRepositoryArticle repository, ServiceStorageConferences serviceStorageConferences) {
         this.refRepository = repository;
+        this.objServicesConference = serviceStorageConferences;
     }
-
     /**
      *
      * @param objArticle Artiucle to add
