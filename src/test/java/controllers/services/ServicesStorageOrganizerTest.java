@@ -27,19 +27,19 @@ public class ServicesStorageOrganizerTest {
     @Test
     void testAddOrganizerFailId() {
         Organizer organizer = new Organizer("John Doe", -1);
-        assertTrue(servicesOrganizer.addOrganizer(organizer), "The services add correct a organizer");    ;
+        assertTrue(!servicesOrganizer.addOrganizer(organizer), "The services add correct a organizer");    ;
     }
     @Test
     void testAddOrganizerFailName(){
         Organizer organizer = new Organizer("", 1);
-        assertTrue(servicesOrganizer.addOrganizer(organizer), "The services dont add  a organizer");    ;
+        assertTrue(!servicesOrganizer.addOrganizer(organizer), "The services dont add  a organizer");    ;
     }
     @Test
     void testAddOrganizerFailDuplicate(){
         Organizer organizer = new Organizer("John Doe", 1);
         servicesOrganizer.addOrganizer(organizer);
         Organizer organizer2 = new Organizer("John Doe", 1);
-        assertTrue(servicesOrganizer.addOrganizer(organizer2), "The services dont add  a organizer Because is duplicate");
+        assertTrue(!servicesOrganizer.addOrganizer(organizer2), "The services dont add  a organizer Because is duplicate");
     }
 
     @Test
