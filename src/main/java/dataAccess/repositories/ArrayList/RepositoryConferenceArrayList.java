@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RepositoryConferenceArrayList implements IRepositoryConference {
     
-    private  ArrayList<Conference> conferences;
+    private  ArrayList<Conference> conferences = new ArrayList<>();; 
 
     public RepositoryConferenceArrayList() {
         this.conferences = new ArrayList<>();
@@ -141,21 +141,24 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
      */
     @Override
     public boolean addConference(Conference conference) {
-        if(conference == null)
+        if (conference == null) {
             return false;
+        }
         conference.setName(conference.getName().strip());
         conference.setPlace(conference.getPlace().strip());
         conference.setTopic(conference.getTopic().strip());
 
-        if(conference.getIdOrganizer() <= 0)
+        if (conference.getIdOrganizer() <= 0) {
             return false;
-        if(conference.getIdConference() <= 0)
+        }
+        if (conference.getIdConference() <= 0) {
             return false;
-        if( conference.getName().compareTo("") == 0 ||
-            conference.getPlace().compareTo("") == 0 ||
-            conference.getTopic().compareTo("") == 0)
+        }
+        if (conference.getName().compareTo("") == 0
+                || conference.getPlace().compareTo("") == 0
+                || conference.getTopic().compareTo("") == 0) {
             return false;
-
+        }
         return this.conferences.add(conference);
     }
     

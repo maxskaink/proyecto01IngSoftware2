@@ -1,8 +1,6 @@
 package views;
 
 import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JFrame;
 import utilities.Utilities;
 
 /*
