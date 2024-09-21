@@ -41,7 +41,6 @@ public class VPlantilla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
-        setResizable(false);
 
         jPanelBackground.setBackground(new java.awt.Color(155, 179, 232));
         jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
