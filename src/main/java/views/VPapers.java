@@ -1,11 +1,6 @@
 package views;
 
-import controllers.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
-import java.util.List;
-import javax.swing.DefaultListModel;
-import models.Conference;
 import utilities.Utilities;
 
 /*
@@ -17,19 +12,13 @@ import utilities.Utilities;
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VConferences extends javax.swing.JFrame {
-    private List<Conference> conferenceList;
+public class VPapers extends javax.swing.JFrame {
+    
     /**
      * Creates new form VLogin
      */
-    public VConferences(ServiceStorageConferences service) {
+    public VPapers() {
         initComponents();
-        List<Conference> conferences = service.listConferences();
-        loadConferences(conferences);
-        jPanelViewC = new javax.swing.JPanel();
-        jPanelViewC.setLayout(null);
-        jPanelBackground.add(jPanelViewC, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
-    
     }
 
     /**
@@ -48,18 +37,9 @@ public class VConferences extends javax.swing.JFrame {
         jPanelMinimize = new javax.swing.JPanel();
         jLabelMinimize = new javax.swing.JLabel();
         jLabelLogo = new javax.swing.JLabel();
-        jLabelProfile = new javax.swing.JLabel();
-        jLabelConferences = new javax.swing.JLabel();
-        jPanelAvailableC = new javax.swing.JPanel();
-        jLabelAvailableC = new javax.swing.JLabel();
-        jPanelViewC = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListConferences = new javax.swing.JList<>();
-        jTextFieldSearch = new javax.swing.JTextField();
-        jLabelLupa = new javax.swing.JLabel();
-        jPanelNoConferences = new javax.swing.JPanel();
-        jLabelNoConference1 = new javax.swing.JLabel();
-        jLabelNoConference2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -67,8 +47,6 @@ public class VConferences extends javax.swing.JFrame {
         setResizable(false);
 
         jPanelBackground.setBackground(new java.awt.Color(155, 179, 232));
-        jPanelBackground.setMinimumSize(new java.awt.Dimension(800, 500));
-        jPanelBackground.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelHeader.setBackground(new java.awt.Color(1, 143, 166));
@@ -83,7 +61,6 @@ public class VConferences extends javax.swing.JFrame {
                 jPanelHeaderMousePressed(evt);
             }
         });
-        jPanelHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelExit.setBackground(new java.awt.Color(1, 143, 166));
 
@@ -120,8 +97,6 @@ public class VConferences extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanelHeader.add(jPanelExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(761, 0, -1, -1));
-
         jPanelMinimize.setBackground(new java.awt.Color(1, 143, 166));
 
         jLabelMinimize.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -157,104 +132,79 @@ public class VConferences extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanelHeader.add(jPanelMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelLogo.setForeground(new java.awt.Color(193, 255, 114));
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
         jLabelLogo.setText("meeting");
-        jPanelHeader.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(591, 0, -1, 60));
 
-        jLabelProfile.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jLabelProfile.setText("Mi perfil");
-        jLabelProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelProfile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabelProfile.setMaximumSize(new java.awt.Dimension(60, 18));
-        jLabelProfile.setMinimumSize(new java.awt.Dimension(60, 18));
-        jLabelProfile.setName(""); // NOI18N
-        jLabelProfile.setPreferredSize(new java.awt.Dimension(60, 18));
-        jPanelHeader.add(jLabelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, 60));
-
-        jLabelConferences.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jLabelConferences.setText("Conferencias");
-        jLabelConferences.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelHeader.add(jLabelConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, -1, 60));
+        javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
+        jPanelHeader.setLayout(jPanelHeaderLayout);
+        jPanelHeaderLayout.setHorizontalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
+                .addComponent(jPanelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 550, Short.MAX_VALUE)
+                .addComponent(jLabelLogo)
+                .addGap(55, 55, 55)
+                .addComponent(jPanelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelHeaderLayout.setVerticalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabelLogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 60));
 
-        jPanelAvailableC.setBackground(new java.awt.Color(94, 23, 235));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelAvailableC.setFont(new java.awt.Font("Montserrat", 1, 16)); // NOI18N
-        jLabelAvailableC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelAvailableC.setText("CONFERENCIAS DISPONIBLES");
+        jPanel2.setBackground(new java.awt.Color(94, 23, 235));
 
-        javax.swing.GroupLayout jPanelAvailableCLayout = new javax.swing.GroupLayout(jPanelAvailableC);
-        jPanelAvailableC.setLayout(jPanelAvailableCLayout);
-        jPanelAvailableCLayout.setHorizontalGroup(
-            jPanelAvailableCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelAvailableCLayout.createSequentialGroup()
+        jLabelName.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelName.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
+        jLabelName.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelName.setText("Conferencia:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelAvailableC, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(437, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanelAvailableCLayout.setVerticalGroup(
-            jPanelAvailableCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelAvailableC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(298, Short.MAX_VALUE))
         );
 
-        jPanelBackground.add(jPanelAvailableC, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 420, 50));
-
-        jPanelViewC.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelViewC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jListConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jListConferences.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListConferences.setVisibleRowCount(4);
-        jScrollPane1.setViewportView(jListConferences);
-
-        jPanelViewC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 600, 200));
-
-        jTextFieldSearch.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldSearch.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jTextFieldSearch.setForeground(new java.awt.Color(153, 153, 153));
-        jTextFieldSearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jTextFieldSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldSearchActionPerformed(evt);
-            }
-        });
-        jPanelViewC.add(jTextFieldSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 17, 568, 25));
-
-        jLabelLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
-        jLabelLupa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelViewC.add(jLabelLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 6, -1, 47));
-
-        jPanelBackground.add(jPanelViewC, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
-
-        jPanelNoConferences.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelNoConferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelNoConference1.setFont(new java.awt.Font("Montserrat", 1, 48)); // NOI18N
-        jLabelNoConference1.setForeground(new java.awt.Color(233, 233, 233));
-        jLabelNoConference1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelNoConference1.setText("No hay conferencias ");
-        jLabelNoConference1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanelNoConferences.add(jLabelNoConference1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 140));
-
-        jLabelNoConference2.setFont(new java.awt.Font("Montserrat", 1, 48)); // NOI18N
-        jLabelNoConference2.setForeground(new java.awt.Color(233, 233, 233));
-        jLabelNoConference2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelNoConference2.setText("disponibles");
-        jLabelNoConference2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelNoConferences.add(jLabelNoConference2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 640, 130));
-
-        jPanelBackground.add(jPanelNoConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
+        jPanelBackground.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 720, 390));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,7 +214,7 @@ public class VConferences extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -302,26 +252,6 @@ public class VConferences extends javax.swing.JFrame {
         Utilities.minimizeWindow(this);
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
-    private void jTextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSearchActionPerformed
-
-    public void loadConferences(List<Conference> conferences) {
-        if (conferences.isEmpty()) {
-            jPanelNoConferences.setVisible(true);
-            jPanelViewC.setVisible(false);
-        } else {
-            jPanelNoConferences.setVisible(false);
-            jPanelViewC.setVisible(true);
-
-            DefaultListModel<String> model = new DefaultListModel<>();
-            for (Conference conf : conferences) {
-                model.addElement(conf.getName() + " - " + conf.getStartDate());
-            }
-            jListConferences.setModel(model);
-        }
-    }
-
     /**
      * @param args the command line arguments
      */
@@ -339,46 +269,41 @@ public class VConferences extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ServiceStorageConferences service = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                new VConferences(service).setVisible(true);
-
+                new VPapers().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelAvailableC;
-    private javax.swing.JLabel jLabelConferences;
     private javax.swing.JLabel jLabelExit;
     private javax.swing.JLabel jLabelLogo;
-    private javax.swing.JLabel jLabelLupa;
     private javax.swing.JLabel jLabelMinimize;
-    private javax.swing.JLabel jLabelNoConference1;
-    private javax.swing.JLabel jLabelNoConference2;
-    private javax.swing.JLabel jLabelProfile;
-    private javax.swing.JList<String> jListConferences;
-    private javax.swing.JPanel jPanelAvailableC;
+    private javax.swing.JLabel jLabelName;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelExit;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelMinimize;
-    private javax.swing.JPanel jPanelNoConferences;
-    private javax.swing.JPanel jPanelViewC;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
 }
