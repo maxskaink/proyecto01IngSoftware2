@@ -1,9 +1,11 @@
 package views;
-
+import java.time.format.DateTimeFormatter;
 import controllers.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
+import java.util.List;
 import utilities.Utilities;
+
 import javax.swing.DefaultListModel;import models.Conference;
 import views.VPapers;
 /*
@@ -17,20 +19,40 @@ import views.VPapers;
  */
 public class VConferenceInfo extends javax.swing.JFrame {
     
+    private int idConference;
+    private ServiceStorageConferences serviceConferences;
+    
     /**
-     * Creates new form VLogin
+     * Creates new form 
      */
    
-    public VConferenceInfo(ServiceStorageConferences service,int id) {
+    public VConferenceInfo(ServiceStorageConferences service,int idConference) {
         initComponents();
-        Conference conference=service.getConferenceById(id);
+        this.serviceConferences = service;
+        this.idConference = idConference;
+        Conference conference=service.getConferenceById(this.idConference);
         mostrarDatos(conference);
         mostrarBoton(conference);
-        jPanelViewInfo = new javax.swing.JPanel();
-        jPanelViewInfo.setLayout(null);
-        jPanelBackground.add(jPanelViewInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
     }
 
+    public void mostrarDatos(Conference conference ){
+       jLabelShownName.setText(conference.getName());
+       jLabelShownDateStart.setText("Desde: "+conference.getStartDate());
+       jLabelShownDateEnds.setText("Hasta: " + conference.getFinishDate());
+       jLabelShownPlace.setText(conference.getPlace());
+       jLabelShownDescription.setText("conference.getDescription()");
+       jLabelShownTopic.setText(conference.getTopic());
+    }
+    public void mostrarBoton(Conference conference){
+     if(conference.isOpen()==false){
+        jButtonNoOpen.setVisible(false);
+        jButtonIsOpen.setVisible(true);
+     }
+     else{
+       jButtonNoOpen.setVisible(false);
+       jButtonIsOpen.setVisible(true);
+     }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,17 +76,16 @@ public class VConferenceInfo extends javax.swing.JFrame {
         jLabelName = new javax.swing.JLabel();
         jLabelShownName = new javax.swing.JLabel();
         jLabelDate = new javax.swing.JLabel();
-        jLabelShownDate = new javax.swing.JLabel();
+        jLabelShownDateEnds = new javax.swing.JLabel();
         jLabelPlace = new javax.swing.JLabel();
         jLabelShownPlace = new javax.swing.JLabel();
         jLabelDescription = new javax.swing.JLabel();
         jLabelShownDescription = new javax.swing.JLabel();
         jLabelShownTopic = new javax.swing.JLabel();
-        jLabelNoOpen = new javax.swing.JLabel();
-        jButtonIsOpen = new javax.swing.JButton();
-        jButtonNotOpen = new javax.swing.JButton();
         jLabelTopic = new javax.swing.JLabel();
-        jLabelIsOpen = new javax.swing.JLabel();
+        jLabelShownDateStart = new javax.swing.JLabel();
+        jButtonNoOpen = new javax.swing.JButton();
+        jButtonIsOpen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -179,7 +200,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
                 .addComponent(jLabelProfile)
                 .addGap(65, 65, 65)
                 .addComponent(jLabelConferences)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
                 .addComponent(jLabelLogo)
                 .addGap(55, 55, 55)
                 .addComponent(jPanelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -210,6 +231,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
 
         jLabelShownName.setFont(new java.awt.Font("Montserrat", 1, 22)); // NOI18N
         jLabelShownName.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelShownName.setText("jdjd");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -220,87 +242,86 @@ public class VConferenceInfo extends javax.swing.JFrame {
                 .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelShownName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelShownName))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         jLabelName.getAccessibleContext().setAccessibleParent(jPanelViewInfo);
         jLabelShownName.getAccessibleContext().setAccessibleName("NombreConferencia");
 
-        jPanelViewInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 16, -1, -1));
+        jPanelViewInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 11, 680, 60));
 
         jLabelDate.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelDate.setForeground(new java.awt.Color(1, 143, 166));
         jLabelDate.setText("Fecha:");
-        jPanelViewInfo.add(jLabelDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 120, -1, -1));
+        jPanelViewInfo.add(jLabelDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jLabelShownDate.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
-        jLabelShownDate.setForeground(new java.awt.Color(0, 0, 0));
-        jPanelViewInfo.add(jLabelShownDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 120, 215, -1));
+        jLabelShownDateEnds.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
+        jLabelShownDateEnds.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelShownDateEnds.setText("ff");
+        jPanelViewInfo.add(jLabelShownDateEnds, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 215, -1));
 
         jLabelPlace.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelPlace.setForeground(new java.awt.Color(1, 143, 166));
         jLabelPlace.setText("Lugar:");
-        jPanelViewInfo.add(jLabelPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 120, -1, -1));
+        jPanelViewInfo.add(jLabelPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
 
         jLabelShownPlace.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelShownPlace.setForeground(new java.awt.Color(0, 0, 0));
-        jPanelViewInfo.add(jLabelShownPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 120, 215, -1));
+        jLabelShownPlace.setText("f");
+        jPanelViewInfo.add(jLabelShownPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 230, -1));
 
         jLabelDescription.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelDescription.setForeground(new java.awt.Color(1, 143, 166));
         jLabelDescription.setText("Descripción:");
-        jPanelViewInfo.add(jLabelDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 156, -1, -1));
+        jPanelViewInfo.add(jLabelDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
         jLabelShownDescription.setFont(new java.awt.Font("Montserrat", 1, 17)); // NOI18N
         jLabelShownDescription.setForeground(new java.awt.Color(0, 0, 0));
         jLabelShownDescription.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelShownDescription.setLabelFor(jLabelDescription);
+        jLabelShownDescription.setText("gg");
         jLabelShownDescription.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanelViewInfo.add(jLabelShownDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 157, 190, 211));
+        jPanelViewInfo.add(jLabelShownDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 190, 211));
 
         jLabelShownTopic.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelShownTopic.setForeground(new java.awt.Color(0, 0, 0));
-        jPanelViewInfo.add(jLabelShownTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 215, -1));
+        jLabelShownTopic.setText("f");
+        jPanelViewInfo.add(jLabelShownTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 215, -1));
 
-        jLabelNoOpen.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
-        jLabelNoOpen.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelNoOpen.setText("Ya no recibe más articulos");
-        jLabelNoOpen.setToolTipText("");
-        jPanelViewInfo.add(jLabelNoOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 220, 50));
+        jLabelTopic.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
+        jLabelTopic.setForeground(new java.awt.Color(1, 143, 166));
+        jLabelTopic.setText("Temas:");
+        jPanelViewInfo.add(jLabelTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, -1, -1));
+
+        jLabelShownDateStart.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
+        jLabelShownDateStart.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelShownDateStart.setText("ff");
+        jPanelViewInfo.add(jLabelShownDateStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 215, -1));
+
+        jButtonNoOpen.setBackground(new java.awt.Color(193, 255, 114));
+        jButtonNoOpen.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
+        jButtonNoOpen.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonNoOpen.setText("No acepta articulos");
+        jPanelViewInfo.add(jButtonNoOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 280, 70));
 
         jButtonIsOpen.setBackground(new java.awt.Color(193, 255, 114));
+        jButtonIsOpen.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
+        jButtonIsOpen.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonIsOpen.setText("Acepta articulo");
         jButtonIsOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIsOpenActionPerformed(evt);
             }
         });
-        jPanelViewInfo.add(jButtonIsOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 270, 90));
-
-        jButtonNotOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNotOpenActionPerformed(evt);
-            }
-        });
-        jPanelViewInfo.add(jButtonNotOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 243, 260, 90));
-
-        jLabelTopic.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
-        jLabelTopic.setForeground(new java.awt.Color(1, 143, 166));
-        jLabelTopic.setText("Temas:");
-        jPanelViewInfo.add(jLabelTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, -1));
-
-        jLabelIsOpen.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
-        jLabelIsOpen.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelIsOpen.setText("Acepta articulo");
-        jPanelViewInfo.add(jLabelIsOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 220, 50));
+        jPanelViewInfo.add(jButtonIsOpen, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 280, 70));
 
         javax.swing.GroupLayout jPanelBackgroundLayout = new javax.swing.GroupLayout(jPanelBackground);
         jPanelBackground.setLayout(jPanelBackgroundLayout);
@@ -308,15 +329,16 @@ public class VConferenceInfo extends javax.swing.JFrame {
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jPanelViewInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jPanelViewInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelBackgroundLayout.setVerticalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
                 .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jPanelViewInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanelViewInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanelViewInfo.getAccessibleContext().setAccessibleName("jPanelViewInfC");
@@ -368,33 +390,11 @@ public class VConferenceInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
     private void jButtonIsOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsOpenActionPerformed
-
+        VPapers createPaperWindow = new VPapers(serviceConferences, idConference);
+        createPaperWindow.setVisible(true); 
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonIsOpenActionPerformed
-
-    private void jButtonNotOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNotOpenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonNotOpenActionPerformed
-    public void mostrarDatos(Conference conference ){
-       jLabelShownName.setText(conference.getName());
-       jLabelShownDate.setText("Desde: "+conference.getStartDate()+" hasta" + conference.getFinishDate());
-       jLabelShownPlace.setText(conference.getPlace());
-       jLabelShownDescription.setText(conference.getDescription());
-       jLabelShownTopic.setText(conference.getTopic());
-    }
-    public void mostrarBoton(Conference conference){
-     if(conference.isOpen()==false){
-        jButtonIsOpen.setVisible(false);
-        jButtonNotOpen.setVisible(true);
-        jLabelIsOpen.setVisible(false);
-        jLabelNoOpen.setVisible(true);
-     }
-     else{
-       jButtonIsOpen.setVisible(true);
-        jButtonNotOpen.setVisible(false);
-        jLabelIsOpen.setVisible(true);
-        jLabelNoOpen.setVisible(false);
-     }
-    }
+ 
     /**
      * @param args the command line arguments
      */
@@ -404,27 +404,26 @@ public class VConferenceInfo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ServiceStorageConferences service = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                int id=0;
-                new VConferenceInfo(service,id).setVisible(true);
+                int idConference = 1;
+                new VConferenceInfo(service, 1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonIsOpen;
-    private javax.swing.JButton jButtonNotOpen;
+    private javax.swing.JButton jButtonNoOpen;
     private javax.swing.JLabel jLabelConferences;
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelDescription;
     private javax.swing.JLabel jLabelExit;
-    private javax.swing.JLabel jLabelIsOpen;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelMinimize;
     private javax.swing.JLabel jLabelName;
-    private javax.swing.JLabel jLabelNoOpen;
     private javax.swing.JLabel jLabelPlace;
     private javax.swing.JLabel jLabelProfile;
-    private javax.swing.JLabel jLabelShownDate;
+    private javax.swing.JLabel jLabelShownDateEnds;
+    private javax.swing.JLabel jLabelShownDateStart;
     private javax.swing.JLabel jLabelShownDescription;
     private javax.swing.JLabel jLabelShownName;
     private javax.swing.JLabel jLabelShownPlace;
