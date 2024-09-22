@@ -50,6 +50,12 @@ public class ServiceStorageConferences extends Subject {
     public List<Conference> listConferences(){
         return this.refRepository.getConferences();
     }
+    
+    public List<Conference> listConferencesByOrganizer(int idOrganizer) {
+        return this.refRepository.getConferencesByOrganizer(idOrganizer);
+    }
+
+    
     public Conference getConferenceById(int id){
         return this.refRepository.getConferenceById(id);
     }

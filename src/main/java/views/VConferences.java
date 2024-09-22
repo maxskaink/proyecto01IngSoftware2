@@ -26,9 +26,6 @@ public class VConferences extends javax.swing.JFrame {
         initComponents();
         List<Conference> conferences = service.listConferences();
         loadConferences(conferences);
-        jPanelViewC = new javax.swing.JPanel();
-        jPanelViewC.setLayout(null);
-        jPanelBackground.add(jPanelViewC, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
     
     }
 

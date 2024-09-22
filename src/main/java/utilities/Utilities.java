@@ -3,10 +3,13 @@ package utilities;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Utilities {
     private static int xMouse;
@@ -16,6 +19,7 @@ public class Utilities {
     public static final Color AZUL_ACENTOS = new Color(1, 143, 166);
     public static final Color VERDE = new Color(193, 255, 114);
     public static final Color MORADO = new Color(94, 23, 235);
+    public static final Color AZUL_OSCURO = new Color(24, 17,67);
     
     public static void headerMousePressed(MouseEvent evt) {
         xMouse = evt.getX();
@@ -54,5 +58,32 @@ public class Utilities {
     public static void setPlainFont(JComponent component) {
         Font plainFont = component.getFont().deriveFont(Font.PLAIN);
         component.setFont(plainFont);
+    }
+    
+    public static boolean isValidDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);  // Esto asegura que solo se acepten fechas estrictamente válidas.
+
+        try {
+            // Intenta analizar la fecha
+            sdf.parse(date);
+            return true;  // Si no lanza excepción, es válida.
+        } catch (ParseException e) {
+            return false;  // Si lanza excepción, la fecha no es válida.
+        }
+    }
+    
+    public static void resetFieldOnPress(JTextField textField, String defaultText, Color defaultColor, Color newColor) {
+        if (textField.getText().equals(defaultText)) {
+            textField.setText("");
+            textField.setForeground(newColor);
+        }
+    }
+    
+    public static void resetFieldFocusLost(JTextField textField, String defaultText, Color defaultColor, Color newColor) {
+        if(textField.getText().isEmpty()){
+            textField.setText(defaultText);
+            textField.setForeground(defaultColor);
+        }
     }
 }
