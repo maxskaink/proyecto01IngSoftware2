@@ -30,7 +30,7 @@ public class Conference {
      * @param idOrganizer Id of creator of the conference
      *
      */
-    public Conference(String name, Date startDate, String description, Date finishDate, String place, String topic, int idConference, int idOrganizer) {
+    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
