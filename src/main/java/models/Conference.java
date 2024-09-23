@@ -98,6 +98,7 @@ public class Conference {
     public int getIdOrganizer() {
         return idOrganizer;
     }
+
     public void setIdOrganizer(int idOrganizer) {
         this.idOrganizer = idOrganizer;
     }

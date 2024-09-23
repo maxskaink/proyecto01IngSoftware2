@@ -22,7 +22,13 @@ public class Author {
         this.nanme = name;
         this.id = id;
         
-    } 
+    }
+    public Author copy(){
+        return new Author(
+                this.getName(),
+                this.getId()
+        );
+    }
     public String getName() {
         return nanme;
     }

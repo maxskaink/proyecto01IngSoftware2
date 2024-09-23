@@ -22,7 +22,13 @@ public class Article {
         this.idAutor = idAutor;
         this.idConferencia = idConferencia;
     }
-
+    public Article copy(){
+        return new Article(
+                this.getName(),
+                this.getIdAutor(),
+                this.getIdConferencia()
+        );
+    }
     /**
      * @return the name
      */
