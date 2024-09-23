@@ -1,8 +1,7 @@
-package controllers.services;
+package Services.services;
 
 
-import controllers.ServiceStorageOrganizer;
-import dataAccess.interfaces.IRepositoryOrganizer;
+import Services.ServiceStorageOrganizer;
 import dataAccess.repositories.ArrayList.RepositoryOrganizerArrayList;
 import models.Organizer;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ServicesStorageOrganizerTest {
     private ServiceStorageOrganizer servicesOrganizer;
-    private IRepositoryOrganizer repositoryOrganizer;
+
     @BeforeEach
     void setUp() {
-        repositoryOrganizer = new RepositoryOrganizerArrayList();
-        servicesOrganizer = new ServiceStorageOrganizer(repositoryOrganizer);
+
+        servicesOrganizer = new ServiceStorageOrganizer( new RepositoryOrganizerArrayList());
     }
 
     @Test

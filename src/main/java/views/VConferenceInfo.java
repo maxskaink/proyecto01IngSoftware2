@@ -1,13 +1,11 @@
 package views;
-import java.time.format.DateTimeFormatter;
-import controllers.ServiceStorageConferences;
+import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
-import java.util.List;
+
 import utilities.Utilities;
 
-import javax.swing.DefaultListModel;import models.Conference;
-import views.VPapers;
+import models.Conference;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template

@@ -1,7 +1,6 @@
-package controllers;
+package Services;
 
 import dataAccess.interfaces.IRepositoryArticle;
-import dataAccess.interfaces.IRepositoryConference;
 import models.Article;
 import models.Conference;
 import  PObserver.Subject;

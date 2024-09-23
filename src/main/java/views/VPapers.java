@@ -1,9 +1,9 @@
 package views;
 
-import controllers.ServiceStorageConferences;
-import controllers.ServiceStorageArticle;
+import Services.ServiceStorageConferences;
+import Services.ServiceStorageArticle;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
-import dataAccess.repositories.ArrayList.RepositoryArticleArrayList;
+
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -467,7 +467,7 @@ public class VPapers extends javax.swing.JFrame {
             String Archive = jTextFieldUpArchive.getText();
 
             // Validar los datos
-            if (name.isEmpty() || Autors.isEmpty() || KeyWords.isEmpty() || Date.isEmpty() || Resumen.isEmpty() || Archive.isEmpty()) {
+            if (name.isEmpty() || Autors.isEmpty() || KeyWords.isEmpty()  || Resumen.isEmpty() || Archive.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -479,7 +479,7 @@ public class VPapers extends javax.swing.JFrame {
                 // Formatear la fecha de publicacion
                 Date = formatter.parse(DateWrite);
                 // Crear un nuevo objeto Article con las fechas formateada
-                  Article newArticle=new Article(name,Autors,KeyWords,Date,Resumen,Archive,idConference);
+                  Article newArticle= null;//new Article(name,Autors,KeyWords,Date,Resumen,Archive,idConference);
                    // Registrar la conferencia
                     serviceArticle.addArticle(newArticle);
                     // Mostrar mensaje de éxito
