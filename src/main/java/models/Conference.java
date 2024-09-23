@@ -42,6 +42,19 @@ public class Conference {
         this.description = description;
     }
 
+    public Conference copy(){
+        return new Conference(
+                this.getName(),
+                this.getDescription(),
+                this.getStartDate(),
+                this.getFinishDate(),
+                this.getPlace(),
+                this.getTopic(),
+                this.getIdConference(),
+                this.getIdOrganizer()
+        );
+    }
+
     public String getName() {
         return name;
     }
@@ -85,11 +98,14 @@ public class Conference {
     public int getIdOrganizer() {
         return idOrganizer;
     }
-
     public void setIdOrganizer(int idOrganizer) {
         this.idOrganizer = idOrganizer;
     }
     public boolean setOpen(boolean open) {
         return this.isOpen = open;
     }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) { this.description = description; }
 }
