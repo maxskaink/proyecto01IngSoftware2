@@ -39,10 +39,7 @@ public class RepositoryOrganizerArrayList implements IRepositoryOrganizer {
             return null;
         for (Organizer organizer : organizers)
             if(organizer.getId() == idOrganizer)
-                return new Organizer(
-                        organizer.getName(),
-                        organizer.getId()
-                );
+                return organizer.copy();
 
         return null;
     }
