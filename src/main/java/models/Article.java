@@ -8,25 +8,25 @@ package models;
 public class Article {
     private String name;
     private int idAutor;
-    private int idConferencia;
+    private Conference conferencia;
     
     /**
      * @param name nombre del autor
      * @param idAutor identificador del archivo
-     * @param idConferencia identificador de la conferencia
+     * @param conference identificador de la conferencia
      */
   
     
-    public Article(String name, int idAutor, int idConferencia) {
+    public Article(String name, int idAutor, Conference conference) {
         this.name = name;
         this.idAutor = idAutor;
-        this.idConferencia = idConferencia;
+        this.conferencia = conferencia;
     }
     public Article copy(){
         return new Article(
                 this.getName(),
                 this.getIdAutor(),
-                this.getIdConferencia()
+                this.getConference().copy()
         );
     }
     /**
@@ -43,9 +43,7 @@ public class Article {
         this.name = name;
     }
     public int getIdAutor() {return this.idAutor;}
-    public void setIdAutor(int idAutor) {this.idAutor = idAutor;}
-    public int getIdConferencia() {return this.idConferencia;}
-    public void setIdConferencia(int idConferencia) {this.idConferencia = idConferencia;}
+    public Conference getConference() {return conferencia;}
+    public void setConference(Conference conference) {this.conferencia = conference;}
 
-   
 }
