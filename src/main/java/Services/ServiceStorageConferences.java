@@ -3,7 +3,7 @@
  * @author Miguel Calambas
  * @brief It's the service to storage conferences generalizing the repositories
  */
-package controllers;
+package Services;
 
 import PObserver.Subject;
 import models.Conference;
@@ -46,6 +46,10 @@ public class ServiceStorageConferences extends Subject {
         if (conference.isOpen())
             conference.setOpen(false);
         return conference.setOpen(true);
+    }
+
+    public boolean isOpen(int id){
+        return this.refRepository.getConferenceById(id).isOpen();
     }
     public List<Conference> listConferences(){
         return this.refRepository.getConferences();

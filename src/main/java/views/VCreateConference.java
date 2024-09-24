@@ -4,7 +4,7 @@
  */
 package views;
 
-import controllers.ServiceStorageConferences;
+import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
 import java.text.ParseException;
@@ -441,7 +441,7 @@ public class VCreateConference extends javax.swing.JFrame {
                     finishDateFormatted = formatter.parse(finishDate);
 
                     // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name, startDateFormatted, finishDateFormatted, place, theme, 1, idOrganizer);
+                    Conference newConference = new Conference(name,"d",  startDateFormatted ,finishDateFormatted, place, theme, 1, idOrganizer);
 
                     // Registrar la conferencia
                     serviceConferences.addConference(newConference);

@@ -43,10 +43,7 @@ public class RepositoryAuthorArrayList implements IRepositoryAuthor {
 
         for(Author author : authors)
             if(author.getId() == idAuthor)
-                return new Author(
-                        author.getName(),
-                        author.getId()
-                );
+                return author.copy();
 
         return null;
     }

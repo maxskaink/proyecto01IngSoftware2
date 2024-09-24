@@ -41,15 +41,7 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
             return foundConferences;
         for(Conference conference : this.conferences)
             if(conference.getIdOrganizer() == idOrganizer)
-                foundConferences.add(new Conference(
-                        conference.getName(),
-                        conference.getStartDate(),
-                        conference.getFinishDate(),
-                        conference.getPlace(),
-                        conference.getTopic(),
-                        conference.getIdConference(),
-                        conference.getIdOrganizer()
-                ));
+                foundConferences.add(conference.copy());
 
         return foundConferences;
     }
@@ -65,15 +57,7 @@ public class RepositoryConferenceArrayList implements IRepositoryConference {
 
         for(Conference conference : this.conferences)
             if(conference.getIdConference() == idConference)
-                return new Conference(
-                        conference.getName(),
-                        conference.getStartDate(),
-                        conference.getFinishDate(),
-                        conference.getPlace(),
-                        conference.getTopic(),
-                        conference.getIdConference(),
-                        conference.getIdOrganizer()
-                );
+                return conference.copy();
         return null;
     }
 

@@ -14,6 +14,12 @@ public class Organizer extends Author{
         super(name, id);
     }
 
+    public Organizer copy(){
+        return new Organizer(
+                this.getName(),
+                this.getId()
+        );
+    }
     /**
      * @return the nanme
      */

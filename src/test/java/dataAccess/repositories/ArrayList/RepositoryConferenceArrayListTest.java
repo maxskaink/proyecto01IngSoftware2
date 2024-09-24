@@ -18,29 +18,29 @@ class RepositoryConferenceArrayListTest {
 
     @Test
     void testAddConference_Success() {
-        Conference conference = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
         boolean result = repository.addConference(conference);
         assertTrue(result);
     }
 
     @Test
     void testAddConference_Failure_EmptyName() {
-        Conference conference = new Conference("", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference = new Conference("", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
         boolean result = repository.addConference(conference);
         assertFalse(result);
     }
 
     @Test
     void testAddConference_Failure_InvalidId() {
-        Conference conference = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", -1, 1);
+        Conference conference = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", -1, 1);
         boolean result = repository.addConference(conference);
         assertFalse(result);
     }
 
     @Test
     void testGetConferences_Success() {
-        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
-        Conference conference2 = new Conference("Conference 2", new Date(), new Date(), "Place 2", "Topic 2", 2, 2);
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference2 = new Conference("Conference 2", "",new Date(), new Date(), "Place 2", "Topic 2", 2, 2);
         repository.addConference(conference1);
         repository.addConference(conference2);
         List<Conference> conferences = repository.getConferences();
@@ -49,8 +49,8 @@ class RepositoryConferenceArrayListTest {
 
     @Test
     void testGetConferencesByOrganizer_Success() {
-        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
-        Conference conference2 = new Conference("Conference 2", new Date(), new Date(), "Place 2", "Topic 2", 2, 1);
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference2 = new Conference("Conference 2", "",new Date(), new Date(), "Place 2", "Topic 2", 2, 1);
         repository.addConference(conference1);
         repository.addConference(conference2);
         List<Conference> conferences = repository.getConferencesByOrganizer(1);
@@ -65,7 +65,7 @@ class RepositoryConferenceArrayListTest {
 
     @Test
     void testGetConferenceById_Success() {
-        Conference conference = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
         repository.addConference(conference);
         Conference result = repository.getConferenceById(1);
         assertNotNull(result);
@@ -79,9 +79,9 @@ class RepositoryConferenceArrayListTest {
     }
     @Test
     void testUpdateConferenceById_Success(){
-        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
         assertTrue(repository.addConference(conference1));
-        Conference conference2 = new Conference("Conference 2", new Date(), new Date(), "Place 2", "Topic 2", 1, 1);
+        Conference conference2 = new Conference("Conference 2", "",new Date(), new Date(), "Place 2", "Topic 2", 1, 1);
         assertNotNull(repository.updateConference(conference1.getIdConference(), conference2));
         Conference updatedConference = repository.getConferenceById(conference2.getIdConference());
         assertTrue(
@@ -94,10 +94,10 @@ class RepositoryConferenceArrayListTest {
     }
     @Test
     void testUpdatedConferenceById_Failure(){
-        Conference conference1 = new Conference("Conference 1", new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
         assertTrue(repository.addConference(conference1));
         assertNull(repository.updateConference(conference1.getIdConference(), null));
         assertNull(repository.updateConference(-1, conference1));
-        assertNull(repository.updateConference(conference1.getIdConference(), new Conference("",new Date(), new Date(), "", "", 1, 1)));
+        assertNull(repository.updateConference(conference1.getIdConference(), new Conference("","",new Date(), new Date(), "", "", 1, 1)));
     }
 }

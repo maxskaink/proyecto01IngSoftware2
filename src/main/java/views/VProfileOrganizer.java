@@ -4,7 +4,7 @@
  */
 package views;
 
-import controllers.ServiceStorageConferences;
+import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
 import java.util.List;

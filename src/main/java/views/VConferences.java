@@ -1,6 +1,6 @@
 package views;
 
-import controllers.ServiceStorageConferences;
+import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -195,7 +195,10 @@ public class VConferences extends javax.swing.JFrame {
         jPanelAvailableC.setLayout(jPanelAvailableCLayout);
         jPanelAvailableCLayout.setHorizontalGroup(
             jPanelAvailableCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelAvailableC, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addGroup(jPanelAvailableCLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelAvailableC, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelAvailableCLayout.setVerticalGroup(
             jPanelAvailableCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,6 +227,11 @@ public class VConferences extends javax.swing.JFrame {
         jTextFieldSearch.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jTextFieldSearch.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldSearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jTextFieldSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSearchActionPerformed(evt);
+            }
+        });
         jPanelViewC.add(jTextFieldSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 17, 568, 25));
 
         jLabelLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
@@ -296,6 +304,10 @@ public class VConferences extends javax.swing.JFrame {
     private void jLabelMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseClicked
         Utilities.minimizeWindow(this);
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
+
+    private void jTextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSearchActionPerformed
 
     public void loadConferences(List<Conference> conferences) {
     if (conferences.isEmpty()) {
