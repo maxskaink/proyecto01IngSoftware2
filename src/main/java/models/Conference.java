@@ -20,12 +20,12 @@ public class Conference {
 
     /**
      * 
-     * @param name Nombre de la conferencia 
-     * @param startDate Fecha inicio de la conferencia 
-     * @param finishDate Fecha de finalizacion de la conferencia 
-     * @param place Lugar de la conferencia
-     * @param topic Tema de la conferencia
-     * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
+     * @param name Conference name
+     * @param startDate Started Date
+     * @param finishDate End Date
+     * @param place place of the conference
+     * @param topic main topic of the conference
+     * @param idConference id of the conference
      *
      */
     public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
@@ -41,7 +41,7 @@ public class Conference {
     }
 
     public Conference copy(){
-        Conference conference = new  Conference(
+        return new  Conference(
                 this.getName(),
                 this.getDescription(),
                 this.getStartDate(),
@@ -51,21 +51,17 @@ public class Conference {
                 this.getIdConference(),
                 this.getIdOrganizer()
         );
-        return conference ;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Date getStartDate() {
         return startDate;
     }
-
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -97,7 +93,6 @@ public class Conference {
     public int getIdOrganizer() {
         return idOrganizer;
     }
-
     public void setIdOrganizer(int idOrganizer) {
         this.idOrganizer = idOrganizer;
     }

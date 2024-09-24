@@ -1,7 +1,7 @@
 /**
  * @file IRepository.java
  * @author Miguel Calambas
- * @Brief It generalice the repositories of the entities
+ * @Brief It generalizes the repositories of the entities
  */
 package dataAccess.interfaces;
 

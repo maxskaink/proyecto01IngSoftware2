@@ -13,12 +13,12 @@ public class RepositoryOrganizerArrayList implements IRepositoryOrganizer {
     }
     /**
      * @param organizer to add in the repository
-     * @return true if add its succesfully
+     * @return true if add its successfully
      */
     @Override
     public boolean addOrganizer(Organizer organizer) {
 
-        organizer.setNanme(organizer.getName().strip());
+        organizer.setName(organizer.getName().strip());
         if(organizer.getId() <=0)
             return false;
         if(organizer.getName().compareTo("") ==0)
@@ -31,7 +31,7 @@ public class RepositoryOrganizerArrayList implements IRepositoryOrganizer {
 
     /**
      * @param idOrganizer Organizer id to search
-     * @return Organizer with idOrganizador
+     * @return Organizer with idOrganizer
      */
     @Override
     public Organizer getOrganizerByID(int idOrganizer) {

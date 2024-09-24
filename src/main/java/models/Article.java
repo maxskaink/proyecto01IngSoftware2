@@ -7,25 +7,25 @@ package models;
  */
 public class Article {
     private String name;
-    private int idAutor;
-    private int  idConferencia;
+    private final int idAuthor;
+    private final int idConference;
     
     /**
-     * @param name nombre del autor
-     * @param idAutor identificador del archivo
-     * @param idConference identificador de la conferencia
+     * @param name author name
+     * @param idAuthor author id who upload the article
+     * @param idConference conference id
      */
   
     
-    public Article(String name, int idAutor, int idConference) {
+    public Article(String name, int idAuthor, int idConference) {
         this.name = name;
-        this.idAutor = idAutor;
-        this.idConferencia = idConference;
+        this.idAuthor = idAuthor;
+        this.idConference = idConference;
     }
     public Article copy(){
         return new Article(
                 this.getName(),
-                this.getIdAutor(),
+                this.getIdAuthor(),
                 this.getIdConference()
         );
     }
@@ -42,6 +42,6 @@ public class Article {
     public void setName(String name) {
         this.name = name;
     }
-    public int getIdAutor() {return this.idAutor;}
-    public int getIdConference() {return idConferencia;}
+    public int getIdAuthor() {return this.idAuthor;}
+    public int getIdConference() {return idConference;}
 }

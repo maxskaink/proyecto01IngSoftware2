@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public class ServiceStorageArticle extends  Subject {
-    private IRepositoryArticle refRepository;
-    private ServiceStorageConferences objServicesConference;
+    private final IRepositoryArticle refRepository;
+    private final ServiceStorageConferences objServicesConference;
 
     public ServiceStorageArticle(IRepositoryArticle repository, ServiceStorageConferences serviceStorageConferences) {
         this.refRepository = repository;
@@ -18,19 +18,23 @@ public class ServiceStorageArticle extends  Subject {
     }
     /**
      *
-     * @param objArticle Artiucle to add
-     * @return a boolean, if the conference is active add the articule
+     * @param objArticle Article to add
+     * @return a boolean, if the conference is active add the article
      */
 
     public boolean addArticle(Article objArticle) {
-        //Valida que la conferencia exista
+        //Valida que la conference exist
+        if(objArticle == null)
+            return false;
         Conference objConference = objServicesConference.getConferenceById(objArticle.getIdConference());
-        if(objConference == null && !objConference.isOpen()  )
+        if(objConference == null )
+            return false;
+        if(!objConference.isOpen() )
             return false;
         this.notifyObservers();
         return this.refRepository.addArticle(objArticle);
      }
-     public List<Article> listArticulesByConferences(int idConferences){
+     public List<Article> listArticlesByConferences(int idConferences){
         List<Conference> listConferences = this.objServicesConference.listConferences();
         for (Conference conference : listConferences) {
             if(conference.getIdConference() == idConferences){
@@ -39,7 +43,7 @@ public class ServiceStorageArticle extends  Subject {
         }
         return null;
      }
-     public List<Article> listArticulesByAuthor(int idAuthor    ){
+     public List<Article> listArticlesByAuthor(int idAuthor    ){
 
         return this.refRepository.getArticleByAuthor(idAuthor);
      }

@@ -37,7 +37,7 @@ public class ServiceStorageConferences extends Subject {
 
     /**
      * @param id identify of Conference
-     * @return the result of the operation succesfully or failed, in bad case, the function return excepcion
+     * @return the result of the operation successfully or failed, in bad case, the function return exception
      */
     public boolean alterOpenConference(int id) {
         Conference conference = getConferenceById(id);

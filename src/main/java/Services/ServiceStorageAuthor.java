@@ -5,10 +5,10 @@ import dataAccess.interfaces.IRepositoryAuthor;
 import models.Author;
 
 public class ServiceStorageAuthor extends Subject {
-    private IRepositoryAuthor repositoryAuthor;
+    private final IRepositoryAuthor repositoryAuthor;
 
-    public ServiceStorageAuthor(IRepositoryAuthor repsository) {
-        this.repositoryAuthor = repsository;
+    public ServiceStorageAuthor(IRepositoryAuthor repository) {
+        this.repositoryAuthor = repository;
 
     }
     public boolean addAuthor(Author author) {

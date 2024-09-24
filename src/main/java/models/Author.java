@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 /**
@@ -9,17 +5,15 @@ package models;
  * @author Santiago Escandon
  */
 public class Author {
-    private String nanme;
+    private String name;
     private int id;
 
     /** 
-     * @param name nombre del Usuario
-     * @param id identificacion del usuario (digitada por el mismo o colocada en automatico por discutir)
-
-     * El atributo isRevisor siempre sera declarado como false, se cambiara cuando se solicite
+     * @param name user name
+     * @param id id user, it comes from the users
      */
     public Author(String name, int id) {
-        this.nanme = name;
+        this.name = name;
         this.id = id;
         
     }
@@ -30,10 +24,10 @@ public class Author {
         );
     }
     public String getName() {
-        return nanme;
+        return name;
     }
-    public void setNanme(String nanme) {
-        this.nanme = nanme;
+    public void setName(String name) {
+        this.name = name;
     }
    
     public int getId() {

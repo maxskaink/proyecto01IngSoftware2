@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RepositoryConferenceArrayList implements IRepositoryConference {
     
-    private  ArrayList<Conference> conferences = new ArrayList<>();; 
+    private final ArrayList<Conference> conferences;
 
     public RepositoryConferenceArrayList() {
         this.conferences = new ArrayList<>();

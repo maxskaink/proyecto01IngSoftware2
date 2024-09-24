@@ -15,19 +15,19 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
     }
 
     /**
-     * @param article aticle to add in a arrayList
-     * @return True if add its succesfully
+     * @param article article to add in a arrayList
+     * @return True if add its successfully
      */
     @Override
     public boolean addArticle(Article article) {
         article.setName(article.getName().strip());
         for (Article a : this.articles)
-            if( a.getIdAutor() == article.getIdAutor() &&
+            if( a.getIdAuthor() == article.getIdAuthor() &&
                 a.getIdConference() == article.getIdConference())
                 return false;
         if(article.getName().compareTo("")==0)
             return false;
-        if(article.getIdConference() <=0 || article.getIdAutor()<=0)
+        if(article.getIdConference() <=0 || article.getIdAuthor()<=0)
             return false;
         return this.articles.add(article);
     }
@@ -62,7 +62,7 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
             return foundArticles;
 
         for (Article article : this.articles)
-            if(article.getIdAutor() == idAuthor)
+            if(article.getIdAuthor() == idAuthor)
                 foundArticles.add(article.copy());
 
         return foundArticles;

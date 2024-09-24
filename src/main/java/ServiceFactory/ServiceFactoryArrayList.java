@@ -11,10 +11,10 @@ import dataAccess.repositories.ArrayList.RepositoryOrganizerArrayList;
 
 public class ServiceFactoryArrayList implements  IServiceFactory{
 
-    private ServiceStorageArticle SSArticle;
-    private ServiceStorageAuthor SSAuthor;
-    private ServiceStorageConferences SSConferences;
-    private ServiceStorageOrganizer SSOrganizer;
+    private final ServiceStorageArticle SSArticle;
+    private final ServiceStorageAuthor SSAuthor;
+    private final ServiceStorageConferences SSConferences;
+    private final ServiceStorageOrganizer SSOrganizer;
 
 
     public ServiceFactoryArrayList(){
@@ -38,7 +38,7 @@ public class ServiceFactoryArrayList implements  IServiceFactory{
     }
 
     /**
-     * @return Intance of ServiceStorageAuthor
+     * @return Instance of ServiceStorageAuthor
      */
     @Override
     public ServiceStorageAuthor getServiceStorageAuthor() {
@@ -46,7 +46,7 @@ public class ServiceFactoryArrayList implements  IServiceFactory{
     }
 
     /**
-     * @return Intance of ServiceStorageConferences
+     * @return Instance of ServiceStorageConferences
      */
     @Override
     public ServiceStorageConferences getServiceStorageConferences() {
@@ -54,7 +54,7 @@ public class ServiceFactoryArrayList implements  IServiceFactory{
     }
 
     /**
-     * @return Intance of ServiceStorageOrganizer
+     * @return Instance of ServiceStorageOrganizer
      */
     @Override
     public ServiceStorageOrganizer getServiceStorageOrganizer() {
