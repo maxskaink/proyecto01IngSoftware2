@@ -76,8 +76,11 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jPanelMinimize = new javax.swing.JPanel();
         jLabelMinimize = new javax.swing.JLabel();
         jLabelLogo = new javax.swing.JLabel();
+        jPanelProfile = new javax.swing.JPanel();
         jLabelProfile = new javax.swing.JLabel();
+        jPanelConferencesHeader = new javax.swing.JPanel();
         jLabelConferences = new javax.swing.JLabel();
+        jPanelMessages = new javax.swing.JPanel();
         jLabelMessages = new javax.swing.JLabel();
         jLabelConf1 = new javax.swing.JLabel();
         jLabelConf2 = new javax.swing.JLabel();
@@ -87,7 +90,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 500));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
 
         jPanelBackground.setBackground(new java.awt.Color(1, 143, 166));
@@ -188,7 +190,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
                 jPanelHeaderMousePressed(evt);
             }
         });
-        jPanelHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelExit.setBackground(new java.awt.Color(24, 17, 67));
 
@@ -225,8 +226,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanelHeader.add(jPanelExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(761, 0, -1, -1));
-
         jPanelMinimize.setBackground(new java.awt.Color(24, 17, 67));
 
         jLabelMinimize.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -262,13 +261,15 @@ public class VProfileOrganizer extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanelHeader.add(jPanelMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelLogo.setForeground(new java.awt.Color(193, 255, 114));
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
         jLabelLogo.setText("meeting");
-        jPanelHeader.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 60));
+
+        jPanelProfile.setBackground(new java.awt.Color(24, 17, 67));
+        jPanelProfile.setMaximumSize(new java.awt.Dimension(60, 18));
+        jPanelProfile.setMinimumSize(new java.awt.Dimension(60, 18));
+        jPanelProfile.setPreferredSize(new java.awt.Dimension(60, 18));
 
         jLabelProfile.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jLabelProfile.setForeground(new java.awt.Color(255, 255, 255));
@@ -279,18 +280,91 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jLabelProfile.setMinimumSize(new java.awt.Dimension(60, 18));
         jLabelProfile.setName(""); // NOI18N
         jLabelProfile.setPreferredSize(new java.awt.Dimension(60, 18));
-        jPanelHeader.add(jLabelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, 60));
+
+        javax.swing.GroupLayout jPanelProfileLayout = new javax.swing.GroupLayout(jPanelProfile);
+        jPanelProfile.setLayout(jPanelProfileLayout);
+        jPanelProfileLayout.setHorizontalGroup(
+            jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProfileLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelProfileLayout.setVerticalGroup(
+            jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanelConferencesHeader.setBackground(new java.awt.Color(24, 17, 67));
 
         jLabelConferences.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jLabelConferences.setForeground(new java.awt.Color(255, 255, 255));
         jLabelConferences.setText("Conferencias");
         jLabelConferences.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanelHeader.add(jLabelConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, 60));
+
+        javax.swing.GroupLayout jPanelConferencesHeaderLayout = new javax.swing.GroupLayout(jPanelConferencesHeader);
+        jPanelConferencesHeader.setLayout(jPanelConferencesHeaderLayout);
+        jPanelConferencesHeaderLayout.setHorizontalGroup(
+            jPanelConferencesHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConferencesHeaderLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelConferences, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelConferencesHeaderLayout.setVerticalGroup(
+            jPanelConferencesHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelConferences, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanelMessages.setBackground(new java.awt.Color(24, 17, 67));
 
         jLabelMessages.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jLabelMessages.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMessages.setText("Mensajes");
-        jPanelHeader.add(jLabelMessages, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+
+        javax.swing.GroupLayout jPanelMessagesLayout = new javax.swing.GroupLayout(jPanelMessages);
+        jPanelMessages.setLayout(jPanelMessagesLayout);
+        jPanelMessagesLayout.setHorizontalGroup(
+            jPanelMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMessagesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelMessagesLayout.setVerticalGroup(
+            jPanelMessagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelMessages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
+        jPanelHeader.setLayout(jPanelHeaderLayout);
+        jPanelHeaderLayout.setHorizontalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                .addComponent(jPanelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabelLogo)
+                .addGap(225, 225, 225)
+                .addComponent(jPanelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(jPanelConferencesHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jPanelMessages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addComponent(jPanelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelHeaderLayout.setVerticalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanelConferencesHeader, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelLogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanelMessages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 60));
 
@@ -432,10 +506,13 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     private javax.swing.JList<String> jListConferences;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelConferences;
+    private javax.swing.JPanel jPanelConferencesHeader;
     private javax.swing.JPanel jPanelExit;
     private javax.swing.JPanel jPanelHeader;
+    private javax.swing.JPanel jPanelMessages;
     private javax.swing.JPanel jPanelMinimize;
     private javax.swing.JPanel jPanelNoConferences;
+    private javax.swing.JPanel jPanelProfile;
     private javax.swing.JScrollPane jScrollPaneConferences;
     private javax.swing.JTextField jTextFieldSearch;
     private javax.swing.JTextField jTextFieldSearch1;

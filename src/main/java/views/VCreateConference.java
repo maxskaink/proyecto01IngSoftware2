@@ -69,7 +69,6 @@ public class VCreateConference extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 500));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
 
         jPanelBackground.setBackground(new java.awt.Color(1, 143, 166));
@@ -271,7 +270,7 @@ public class VCreateConference extends javax.swing.JFrame {
         jTextFieldStartDate.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldStartDate.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jTextFieldStartDate.setForeground(new java.awt.Color(153, 153, 153));
-        jTextFieldStartDate.setText("00/00/00");
+        jTextFieldStartDate.setText("00/00/0000");
         jTextFieldStartDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTextFieldStartDate.setMaximumSize(new java.awt.Dimension(270, 30));
         jTextFieldStartDate.setMinimumSize(new java.awt.Dimension(270, 30));
@@ -346,7 +345,7 @@ public class VCreateConference extends javax.swing.JFrame {
         jTextFieldFinishDate.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldFinishDate.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jTextFieldFinishDate.setForeground(new java.awt.Color(153, 153, 153));
-        jTextFieldFinishDate.setText("00/00/00");
+        jTextFieldFinishDate.setText("00/00/0000");
         jTextFieldFinishDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTextFieldFinishDate.setMaximumSize(new java.awt.Dimension(270, 30));
         jTextFieldFinishDate.setMinimumSize(new java.awt.Dimension(270, 30));
@@ -484,19 +483,19 @@ public class VCreateConference extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldPlaceFocusLost
 
     private void jTextFieldStartDateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldStartDateMousePressed
-        Utilities.resetFieldOnPress(jTextFieldStartDate, "00/00/00", Color.gray, Color.black);
+        Utilities.resetFieldOnPress(jTextFieldStartDate, "00/00/0000", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldStartDateMousePressed
 
     private void jTextFieldStartDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldStartDateFocusLost
-        Utilities.resetFieldFocusLost(jTextFieldStartDate, "00/00/00", Color.gray, Color.black);
+        Utilities.resetFieldFocusLost(jTextFieldStartDate, "00/00/0000", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldStartDateFocusLost
 
     private void jTextFieldFinishDateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldFinishDateMousePressed
-        Utilities.resetFieldOnPress(jTextFieldFinishDate, "00/00/00", Color.gray, Color.black);
+        Utilities.resetFieldOnPress(jTextFieldFinishDate, "00/00/0000", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldFinishDateMousePressed
 
     private void jTextFieldFinishDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFinishDateFocusLost
-        Utilities.resetFieldFocusLost(jTextFieldFinishDate, "00/00/00", Color.gray, Color.black);
+        Utilities.resetFieldFocusLost(jTextFieldFinishDate, "00/00/0000", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldFinishDateFocusLost
 
     private void jTextFieldDescriptionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDescriptionMousePressed

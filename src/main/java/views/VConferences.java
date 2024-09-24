@@ -2,9 +2,14 @@ package views;
 
 import controllers.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.List;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import models.Conference;
 import utilities.Utilities;
 
@@ -12,13 +17,14 @@ import utilities.Utilities;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VConferences extends javax.swing.JFrame {
+
     private List<Conference> conferenceList;
+
     /**
      * Creates new form VLogin
      */
@@ -26,7 +32,6 @@ public class VConferences extends javax.swing.JFrame {
         initComponents();
         List<Conference> conferences = service.listConferences();
         loadConferences(conferences);
-    
     }
 
     /**
@@ -50,7 +55,7 @@ public class VConferences extends javax.swing.JFrame {
         jPanelAvailableC = new javax.swing.JPanel();
         jLabelAvailableC = new javax.swing.JLabel();
         jPanelViewC = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneConferences = new javax.swing.JScrollPane();
         jListConferences = new javax.swing.JList<>();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelLupa = new javax.swing.JLabel();
@@ -182,6 +187,7 @@ public class VConferences extends javax.swing.JFrame {
         jPanelAvailableC.setBackground(new java.awt.Color(94, 23, 235));
 
         jLabelAvailableC.setFont(new java.awt.Font("Montserrat", 1, 16)); // NOI18N
+        jLabelAvailableC.setForeground(new java.awt.Color(255, 255, 255));
         jLabelAvailableC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAvailableC.setText("CONFERENCIAS DISPONIBLES");
 
@@ -201,7 +207,7 @@ public class VConferences extends javax.swing.JFrame {
         jPanelViewC.setBackground(new java.awt.Color(255, 255, 255));
         jPanelViewC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPaneConferences.setBackground(new java.awt.Color(255, 255, 255));
 
         jListConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jListConferences.setModel(new javax.swing.AbstractListModel<String>() {
@@ -210,9 +216,9 @@ public class VConferences extends javax.swing.JFrame {
             public String getElementAt(int i) { return strings[i]; }
         });
         jListConferences.setVisibleRowCount(4);
-        jScrollPane1.setViewportView(jListConferences);
+        jScrollPaneConferences.setViewportView(jListConferences);
 
-        jPanelViewC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 600, 200));
+        jPanelViewC.add(jScrollPaneConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 600, 200));
 
         jTextFieldSearch.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldSearch.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
@@ -292,19 +298,35 @@ public class VConferences extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
     public void loadConferences(List<Conference> conferences) {
-        if (conferences.isEmpty()) {
-            jPanelNoConferences.setVisible(true);
-            jPanelViewC.setVisible(false);
-        } else {
-            jPanelNoConferences.setVisible(false);
-            jPanelViewC.setVisible(true);
+    if (conferences.isEmpty()) {
+        jPanelNoConferences.setVisible(true);
+        jScrollPaneConferences.setVisible(false);  // Ocultar el JScrollPane si no hay conferencias
+    } else {
+        jPanelNoConferences.setVisible(false);
+        jScrollPaneConferences.setVisible(true);  // Mostrar el JScrollPane cuando haya conferencias
 
-            DefaultListModel<String> model = new DefaultListModel<>();
-            for (Conference conf : conferences) {
-                model.addElement(conf.getName() + " - " + conf.getStartDate());
-            }
-            jListConferences.setModel(model);
+        // Crear el modelo para el JList
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (Conference conf : conferences) {
+            model.addElement(conf.getName() + " - " + conf.getStartDate());
         }
+
+        // Asignar el modelo al JList
+        jListConferences.setModel(model);
+
+        // Ajustar el número de conferencias visibles y el tamaño de las celdas
+        jListConferences.setFixedCellHeight(50);  // Ajusta este valor para definir la altura de cada celda
+        jListConferences.setVisibleRowCount(4);   // Muestra solo 4 conferencias visibles a la vez
+
+        // Asegurar que el JList esté dentro del JScrollPane
+        jScrollPaneConferences.setViewportView(jListConferences);
+    
+}
+    }
+
+    private void openVConferenceInfo(Conference conf) {
+        VPlantilla vInfo = new VPlantilla();
+        vInfo.setVisible(true); // Mostrar la nueva ventana
     }
 
     /**
@@ -363,7 +385,7 @@ public class VConferences extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMinimize;
     private javax.swing.JPanel jPanelNoConferences;
     private javax.swing.JPanel jPanelViewC;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneConferences;
     private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
 }
