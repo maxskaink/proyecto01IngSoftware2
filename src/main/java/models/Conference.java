@@ -2,6 +2,7 @@
 package models;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 /**
  *
@@ -18,6 +19,8 @@ public class Conference {
     private int idOrganizer;
     private  boolean isOpen ;
     private String description;
+    ArrayList <Article> articles;
+    Organizer organizer;
 
     /**
      * 
@@ -27,10 +30,10 @@ public class Conference {
      * @param place Lugar de la conferencia
      * @param topic Tema de la conferencia
      * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
-     * @param idOrganizer Id of creator of the conference
+     * @param organizer Class organizador
      *
      */
-    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
+    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, Organizer organizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -40,10 +43,11 @@ public class Conference {
         this.idOrganizer = idOrganizer;
         this.isOpen = false;
         this.description = description;
+        this.articles = new ArrayList<Article>();
     }
 
     public Conference copy(){
-        return new Conference(
+        Conference conference = new  Conference(
                 this.getName(),
                 this.getDescription(),
                 this.getStartDate(),
@@ -51,8 +55,11 @@ public class Conference {
                 this.getPlace(),
                 this.getTopic(),
                 this.getIdConference(),
-                this.getIdOrganizer()
+                this.getOrganizer().copy()
         );
+        for(Article articule: articles)
+            conference.addArticle(articule.copy());
+        return conference ;
     }
 
     public String getName() {
@@ -108,5 +115,10 @@ public class Conference {
     public String getDescription() {
         return description;
     }
+    public Organizer getOrganizer() { return this.organizer; }
+    public void setOrganizer(Organizer organizer) { this.organizer = organizer; }
     public void setDescription(String description) { this.description = description; }
+    public ArrayList<Article> getArticles() {return this.articles;}
+    public void addArticle(Article article) {this.articles.add(article);}
+    public void setArticules(ArrayList<Article> articles){this.articles = articles;}
 }
