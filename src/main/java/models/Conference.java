@@ -19,8 +19,6 @@ public class Conference {
     private int idOrganizer;
     private  boolean isOpen ;
     private String description;
-    ArrayList <Article> articles;
-    Organizer organizer;
 
     /**
      * 
@@ -30,10 +28,9 @@ public class Conference {
      * @param place Lugar de la conferencia
      * @param topic Tema de la conferencia
      * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
-     * @param organizer Class organizador
      *
      */
-    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, Organizer organizer) {
+    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -43,7 +40,6 @@ public class Conference {
         this.idOrganizer = idOrganizer;
         this.isOpen = false;
         this.description = description;
-        this.articles = new ArrayList<Article>();
     }
 
     public Conference copy(){
@@ -55,10 +51,8 @@ public class Conference {
                 this.getPlace(),
                 this.getTopic(),
                 this.getIdConference(),
-                this.getOrganizer().copy()
+                this.getIdOrganizer()
         );
-        for(Article articule: articles)
-            conference.addArticle(articule.copy());
         return conference ;
     }
 
@@ -115,10 +109,5 @@ public class Conference {
     public String getDescription() {
         return description;
     }
-    public Organizer getOrganizer() { return this.organizer; }
-    public void setOrganizer(Organizer organizer) { this.organizer = organizer; }
     public void setDescription(String description) { this.description = description; }
-    public ArrayList<Article> getArticles() {return this.articles;}
-    public void addArticle(Article article) {this.articles.add(article);}
-    public void setArticules(ArrayList<Article> articles){this.articles = articles;}
 }

@@ -23,11 +23,11 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
         article.setName(article.getName().strip());
         for (Article a : this.articles)
             if( a.getIdAutor() == article.getIdAutor() &&
-                a.getIdConferencia() == article.getIdConferencia())
+                a.getIdConference() == article.getIdConference())
                 return false;
         if(article.getName().compareTo("")==0)
             return false;
-        if(article.getIdConferencia() <=0 || article.getIdAutor()<=0)
+        if(article.getIdConference() <=0 || article.getIdAutor()<=0)
             return false;
         return this.articles.add(article);
     }
@@ -44,7 +44,7 @@ public class RepositoryArticleArrayList implements IRepositoryArticle {
             return foundArticles;
 
         for (Article article : this.articles)
-            if(article.getIdConferencia() == idConference)
+            if(article.getIdConference() == idConference)
                 foundArticles.add(article.copy());
 
         return foundArticles;

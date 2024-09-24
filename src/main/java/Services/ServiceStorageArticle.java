@@ -24,7 +24,7 @@ public class ServiceStorageArticle extends  Subject {
 
     public boolean addArticle(Article objArticle) {
         //Valida que la conferencia exista
-        Conference objConference = objServicesConference.getConferenceById(objArticle.getIdConferencia());
+        Conference objConference = objServicesConference.getConferenceById(objArticle.getIdConference());
         if(objConference == null && !objConference.isOpen()  )
             return false;
         this.notifyObservers();
