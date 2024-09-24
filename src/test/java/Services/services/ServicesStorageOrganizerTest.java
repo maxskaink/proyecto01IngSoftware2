@@ -14,7 +14,6 @@ public class ServicesStorageOrganizerTest {
 
     @BeforeEach
     void setUp() {
-
         servicesOrganizer = new ServiceStorageOrganizer( new RepositoryOrganizerArrayList());
     }
 
