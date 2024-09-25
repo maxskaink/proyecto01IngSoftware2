@@ -9,6 +9,7 @@ import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import models.Conference;
@@ -18,20 +19,23 @@ import utilities.Utilities;
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VCreateConference extends javax.swing.JFrame {
+public class VUpdateConference extends javax.swing.JFrame {
+    private Conference conference;
     private ServiceStorageConferences serviceConferences;
     private VProfileOrganizer profileOrganizer;
     private int idOrganizer;
-    private Runnable refreshCallback;  // Función para notificar a la ventana principal
+    private Runnable refreshCallback;
     
     /**
      * Creates new form VProfileOrganizer
      */
-    public VCreateConference(ServiceStorageConferences serviceConferences, int idOrganizer, Runnable refreshCallback) {
+    public VUpdateConference(ServiceStorageConferences serviceConferences, int idOrganizer, Conference conference, Runnable refreshCallback) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
-        this.refreshCallback = refreshCallback;  
+        this.conference = conference;
+        this.refreshCallback = refreshCallback;
+        fillFields();
     }
 
     /**
@@ -53,7 +57,7 @@ public class VCreateConference extends javax.swing.JFrame {
         jLabelProfile = new javax.swing.JLabel();
         jLabelConferences = new javax.swing.JLabel();
         jLabelMessages = new javax.swing.JLabel();
-        jButtonRegister = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jLabelTitle = new javax.swing.JLabel();
         jLabelName = new javax.swing.JLabel();
         jTextFieldName = new javax.swing.JTextField();
@@ -69,7 +73,6 @@ public class VCreateConference extends javax.swing.JFrame {
         jLabelFinishDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setUndecorated(true);
         setResizable(false);
 
@@ -204,19 +207,19 @@ public class VCreateConference extends javax.swing.JFrame {
 
         jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 60));
 
-        jButtonRegister.setBackground(new java.awt.Color(34, 53, 162));
-        jButtonRegister.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jButtonRegister.setText("REGISTRAR");
-        jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditar.setBackground(new java.awt.Color(34, 53, 162));
+        jButtonEditar.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jButtonEditar.setText("EDITAR");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegisterActionPerformed(evt);
+                jButtonEditarActionPerformed(evt);
             }
         });
-        jPanelBackground.add(jButtonRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 170, 60));
+        jPanelBackground.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 170, 60));
 
         jLabelTitle.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitle.setText("Crea una nueva conferencia");
+        jLabelTitle.setText("Editar conferencia");
         jPanelBackground.add(jLabelTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 800, -1));
 
         jLabelName.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
@@ -415,7 +418,7 @@ public class VCreateConference extends javax.swing.JFrame {
         Utilities.headerMousePressed(evt);
     }//GEN-LAST:event_jPanelHeaderMousePressed
 
-    private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         try {
             // Obtener datos de los campos de texto
             String name = jTextFieldName.getText();
@@ -443,17 +446,17 @@ public class VCreateConference extends javax.swing.JFrame {
                     finishDateFormatted = formatter.parse(finishDate);
 
                     // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name, description,  startDateFormatted ,finishDateFormatted, place, theme, (serviceConferences.listConferences().size()+1), idOrganizer);
-
-                    // Registrar la conferencia
-                    serviceConferences.addConference(newConference);
-
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(this, "Conferencia registrada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    Conference newConference = new Conference(name,"d",  startDateFormatted ,finishDateFormatted, place, theme, 1, idOrganizer);
                     
+                    // Editar la conferencia
+                    serviceConferences.updateConference(newConference, conference.getIdConference());
+
                     if (refreshCallback != null) {
                         refreshCallback.run();  // Ejecutamos el método de refresco
                     }
+                    
+                    // Mostrar mensaje de éxito
+                    JOptionPane.showMessageDialog(this, "Conferencia editada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     
                     this.dispose();
 
@@ -468,12 +471,21 @@ public class VCreateConference extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la conferencia", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al editar la conferencia", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
-    }//GEN-LAST:event_jButtonRegisterActionPerformed
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
+    private void fillFields() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        jTextFieldName.setText(conference.getName());
+        jTextFieldStartDate.setText(formatter.format(conference.getStartDate())); 
+        jTextFieldFinishDate.setText(formatter.format(conference.getFinishDate())); 
+        jTextFieldPlace.setText(conference.getPlace());
+        jTextFieldTheme.setText(conference.getTopic());
+    }
+    
     private void jTextFieldNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNameMousePressed
        Utilities.resetFieldOnPress(jTextFieldName, "Nombre de la conferencia", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldNameMousePressed
@@ -550,13 +562,13 @@ public class VCreateConference extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -564,17 +576,22 @@ public class VCreateConference extends javax.swing.JFrame {
         //</editor-fold>
         ServiceStorageConferences serviceConferences = new ServiceStorageConferences(new RepositoryConferenceArrayList());
         int idOrganizer = 1;
-        Runnable refreshCallback = null;
+        Calendar calendar = Calendar.getInstance();
+        Date startDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date finishDate = calendar.getTime(); 
+        Conference conference = new Conference("","", startDate, finishDate, "", "", 1, idOrganizer);
+        Runnable rollback = null;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VCreateConference(serviceConferences, idOrganizer, refreshCallback).setVisible(true);
+                new VUpdateConference(serviceConferences, idOrganizer, conference, rollback).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonRegister;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabelConferences;
     private javax.swing.JLabel jLabelDescription;
     private javax.swing.JLabel jLabelExit;

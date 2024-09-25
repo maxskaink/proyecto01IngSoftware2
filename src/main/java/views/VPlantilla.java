@@ -179,7 +179,7 @@ public class VPlantilla extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelHeaderMouseDragged
 
     private void jLabelExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseClicked
-        Utilities.exitApp();
+        this.dispose();
     }//GEN-LAST:event_jLabelExitMouseClicked
 
     private void jLabelExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseEntered

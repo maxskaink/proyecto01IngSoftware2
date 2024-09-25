@@ -16,8 +16,8 @@ import models.Conference;
  * @author Isabela Mosquera Fernandez <isabelamosquera@unicauca.edu.co>
  */
 public class VConferenceInfo extends javax.swing.JFrame {
-    
     private int idConference;
+    private Conference conference;
     private ServiceStorageConferences serviceConferences;
     
     /**
@@ -27,8 +27,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
     public VConferenceInfo(ServiceStorageConferences service,int idConference) {
         initComponents();
         this.serviceConferences = service;
-        this.idConference = idConference;
-        Conference conference=service.getConferenceById(this.idConference);
+        this.conference = service.getConferenceById(idConference);
         mostrarDatos(conference);
         mostrarBoton(conference);
     }
@@ -38,7 +37,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
        jLabelShownDateStart.setText("Desde: "+conference.getStartDate());
        jLabelShownDateEnds.setText("Hasta: " + conference.getFinishDate());
        jLabelShownPlace.setText(conference.getPlace());
-       jLabelShownDescription.setText("conference.getDescription()");
+       jLabelShownDescription.setText(conference.getDescription());
        jLabelShownTopic.setText(conference.getTopic());
     }
     public void mostrarBoton(Conference conference){
@@ -364,7 +363,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelHeaderMouseDragged
 
     private void jLabelExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseClicked
-        Utilities.exitApp();
+        this.dispose();
     }//GEN-LAST:event_jLabelExitMouseClicked
 
     private void jLabelExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseEntered

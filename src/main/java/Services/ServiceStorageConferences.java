@@ -34,6 +34,14 @@ public class ServiceStorageConferences extends Subject {
         }
         return false;
     }
+    
+    public boolean updateConference(Conference obj, int conf){
+        return (this.refRepository.updateConference(conf, obj)!=null);
+    }
+    
+    public boolean deleteConferenceById(int id){
+        return this.refRepository.deleteConferenceById(id)!=null;
+    }
 
     /**
      * @param id identify of Conference

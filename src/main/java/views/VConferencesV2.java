@@ -3,8 +3,17 @@ package views;
 import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import javax.swing.DefaultListModel;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import models.Conference;
 import utilities.Utilities;
 
@@ -16,19 +25,21 @@ import utilities.Utilities;
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VConferences extends javax.swing.JFrame {
-    private Runnable refreshCallback;
+public class VConferencesV2 extends javax.swing.JFrame {
+    private ServiceStorageConferences service;
     private List<Conference> conferenceList;
+    private Runnable refreshCallback; 
 
     /**
      * Creates new form VLogin
      */
-    public VConferences(ServiceStorageConferences service, Runnable refreshCallback) {
+    public VConferencesV2(ServiceStorageConferences service, Runnable refreshCallback) {
+        this.service = service;
+        this.refreshCallback = refreshCallback;
         initComponents();
         List<Conference> conferences = service.listConferences();
-        this.refreshCallback = refreshCallback;
-        loadConferences(conferences);
         
+        loadConferences(conferences);
     }
 
     /**
@@ -53,12 +64,13 @@ public class VConferences extends javax.swing.JFrame {
         jLabelAvailableC = new javax.swing.JLabel();
         jPanelViewC = new javax.swing.JPanel();
         jScrollPaneConferences = new javax.swing.JScrollPane();
-        jListConferences = new javax.swing.JList<>();
+        jTableConferences = new javax.swing.JTable();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelLupa = new javax.swing.JLabel();
         jPanelNoConferences = new javax.swing.JPanel();
         jLabelNoConference1 = new javax.swing.JLabel();
         jLabelNoConference2 = new javax.swing.JLabel();
+        jButtonRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -211,14 +223,19 @@ public class VConferences extends javax.swing.JFrame {
 
         jScrollPaneConferences.setBackground(new java.awt.Color(255, 255, 255));
 
-        jListConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jListConferences.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListConferences.setVisibleRowCount(4);
-        jScrollPaneConferences.setViewportView(jListConferences);
+        jTableConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        jTableConferences.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPaneConferences.setViewportView(jTableConferences);
 
         jPanelViewC.add(jScrollPaneConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 600, 200));
 
@@ -257,6 +274,15 @@ public class VConferences extends javax.swing.JFrame {
         jPanelNoConferences.add(jLabelNoConference2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 640, 130));
 
         jPanelBackground.add(jPanelNoConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 640, 270));
+
+        jButtonRefresh.setBackground(new java.awt.Color(24, 17, 67));
+        jButtonRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/actualizar32.png"))); // NOI18N
+        jButtonRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRefreshMouseClicked(evt);
+            }
+        });
+        jPanelBackground.add(jButtonRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 103, 50, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -308,37 +334,52 @@ public class VConferences extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldSearchActionPerformed
 
+    private void jButtonRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRefreshMouseClicked
+        refreshConferences();
+    }//GEN-LAST:event_jButtonRefreshMouseClicked
+
     public void loadConferences(List<Conference> conferences) {
-    if (conferences.isEmpty()) {
-        jPanelNoConferences.setVisible(true);
-        jScrollPaneConferences.setVisible(false);  // Ocultar el JScrollPane si no hay conferencias
-    } else {
-        jPanelNoConferences.setVisible(false);
-        jScrollPaneConferences.setVisible(true);  // Mostrar el JScrollPane cuando haya conferencias
+        if (conferences.isEmpty()) {
+            jPanelNoConferences.setVisible(true);
+            jScrollPaneConferences.setVisible(false);
+        } else {
+            jPanelNoConferences.setVisible(false);
+            jScrollPaneConferences.setVisible(true);
 
-        // Crear el modelo para el JList
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for (Conference conf : conferences) {
-            model.addElement(conf.getName() + " - " + conf.getStartDate());
+            // Crear un modelo de tabla personalizado
+            DefaultTableModel model = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column == 2;  // Solo la columna del botón es editable
+                }
+            };
+
+            model.addColumn("Nombre");
+            model.addColumn("Fecha de Inicio");
+            model.addColumn("");  // Columna vacía para el botón
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+            for (Conference conf : conferences) {
+                model.addRow(new Object[]{conf.getName(), formatter.format(conf.getStartDate()), "Ver más..."});
+            }
+
+            jTableConferences.setModel(model);
+
+            jTableConferences.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+            jTableConferences.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox(), conferences, service, this::refreshConferences));
+
+            jTableConferences.getColumnModel().getColumn(0).setPreferredWidth(200);
+            jTableConferences.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTableConferences.getColumnModel().getColumn(2).setPreferredWidth(100);
+            
+            jTableConferences.setRowHeight(40);
         }
-
-        // Asignar el modelo al JList
-        jListConferences.setModel(model);
-
-        // Ajustar el número de conferencias visibles y el tamaño de las celdas
-        jListConferences.setFixedCellHeight(50);  // Ajusta este valor para definir la altura de cada celda
-        jListConferences.setVisibleRowCount(4);   // Muestra solo 4 conferencias visibles a la vez
-        
-
-        // Asegurar que el JList esté dentro del JScrollPane
-        jScrollPaneConferences.setViewportView(jListConferences);
-    
-}
     }
 
-    private void openVConferenceInfo(Conference conf) {
-        VPlantilla vInfo = new VPlantilla();
-        vInfo.setVisible(true); // Mostrar la nueva ventana
+    private void refreshConferences() {
+        List<Conference> updatedConferences = service.listConferences();
+        loadConferences(updatedConferences);
     }
 
     /**
@@ -358,14 +399,16 @@ public class VConferences extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VConferencesV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VConferencesV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VConferencesV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VConferences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VConferencesV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -373,14 +416,92 @@ public class VConferences extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ServiceStorageConferences service = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                Runnable refreshCallback = null;
-                new VConferences(service, refreshCallback).setVisible(true);
+                Runnable refreshCallback = null; 
+                new VConferencesV2(service, refreshCallback).setVisible(true);
 
             }
         });
     }
+    
+    
+// Clase para renderizar un botón en la celda
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+// Clase para manejar la edición de la celda con el botón
+    class ButtonEditor extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private boolean isPushed;
+        private List<Conference> conferences;
+        private ServiceStorageConferences service;  // Añadir el servicio como atributo
+        private Runnable refreshCallback; 
+
+        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceStorageConferences service, Runnable refreshCallback) {
+            super(checkBox);
+            this.conferences = conferences;
+            this.service = service;  // Inicializar el servicio
+            this.refreshCallback = refreshCallback;  // Guardar el callback
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Obtener la conferencia seleccionada
+                Conference selectedConference = conferences.get(jTableConferences.getSelectedRow());
+
+                // Obtener el id de la conferencia seleccionada
+                int idConference = selectedConference.getIdConference();
+
+                // Abrir la ventana VConferenceInfo con el service y el idConference
+                VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonRefresh;
     private javax.swing.JLabel jLabelAvailableC;
     private javax.swing.JLabel jLabelConferences;
     private javax.swing.JLabel jLabelExit;
@@ -390,7 +511,6 @@ public class VConferences extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNoConference1;
     private javax.swing.JLabel jLabelNoConference2;
     private javax.swing.JLabel jLabelProfile;
-    private javax.swing.JList<String> jListConferences;
     private javax.swing.JPanel jPanelAvailableC;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelExit;
@@ -399,6 +519,7 @@ public class VConferences extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelNoConferences;
     private javax.swing.JPanel jPanelViewC;
     private javax.swing.JScrollPane jScrollPaneConferences;
+    private javax.swing.JTable jTableConferences;
     private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
 }

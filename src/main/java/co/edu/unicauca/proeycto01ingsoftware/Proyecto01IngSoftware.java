@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import views.VConferenceInfo;
-import views.VConferences;
+import views.VConferencesV2;
 import views.VProfileOrganizer;
 
 public class Proyecto01IngSoftware {
@@ -23,6 +23,7 @@ public class Proyecto01IngSoftware {
         // Crear un repositorio y un servicio para manejar las conferencias
         RepositoryConferenceArrayList repository = new RepositoryConferenceArrayList();
         ServiceStorageConferences service = new ServiceStorageConferences(repository);
+        Runnable refreshCallback = null;
 
 
         // Agregar conferencias de ejemplo (esto solo para pruebas)
@@ -32,16 +33,6 @@ public class Proyecto01IngSoftware {
         calendar.add(Calendar.DAY_OF_MONTH, 1); // Sumar un día
         Date finishDate = calendar.getTime(); // Fecha un día después
 
-        service.addConference(new Conference("Conferencia 1", startDate, finishDate, "Lugar 1", "Tema 1", 1, 100));
-        service.addConference(new Conference("Conferencia 2", startDate, finishDate, "Lugar 2", "Tema 2", 2, 101));
-        service.addConference(new Conference("Conferencia 3", startDate, finishDate, "Lugar 3", "Tema 3", 3, 102));
-        service.addConference(new Conference("Conferencia 4", startDate, finishDate, "Lugar 4", "Tema 4", 4, 103));
-        service.addConference(new Conference("Conferencia 5", startDate, finishDate, "Lugar 5", "Tema 5", 5, 104));
-        service.addConference(new Conference("Conferencia 6", startDate, finishDate, "Lugar 6", "Tema 6", 6, 105));
-        service.addConference(new Conference("Conferencia 7", startDate, finishDate, "Lugar 7", "Tema 7", 7, 106));
-        service.addConference(new Conference("Conferencia 7", startDate, finishDate, "Lugar 8", "Tema 8", 8, 107));
-        service.addConference(new Conference("Conferencia 7", startDate, finishDate, "Lugar 9", "Tema 9", 9, 108));
-        service.addConference(new Conference("Conferencia 7", startDate, finishDate, "Lugar 10", "Tema 10",10, 109));
         boolean added1 = service.addConference(new Conference("Conferencia 1","food", startDate , finishDate, "Lugar 1", "Tema 1", 1, 100));
         boolean added2 = service.addConference(new Conference("Conferencia 2", "food" , startDate, finishDate, "Lugar 2", "Tema 2", 2, 101));
         boolean added3 = service.addConference(new Conference("Conferencia 3","food", startDate , finishDate, "Lugar 3", "Tema 3", 3, 102));
@@ -52,7 +43,7 @@ public class Proyecto01IngSoftware {
         List<Conference> conferences = service.listConferences();
 
         // Crear la ventana y hacerla visible
-        VConferences window = new VConferences(service);
+        VConferencesV2 window = new VConferencesV2(service, refreshCallback);
         window.setVisible(true);
         for (Conference c : conferences) {
             System.out.println("Conferencia: " + c.getName() + ", Lugar: " + c.getPlace() + ", Tema: " + c.getTopic());

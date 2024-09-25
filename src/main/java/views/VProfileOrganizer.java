@@ -7,45 +7,83 @@ package views;
 import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.DefaultListModel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import models.Conference;
 import utilities.Utilities;
-
 /**
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VProfileOrganizer extends javax.swing.JFrame {
+
     private List<Conference> conferenceList;
     private int idOrganizer;
     private ServiceStorageConferences serviceConferences;
     private VCreateConference createConferenceWindow;
+
     /**
      * Creates new form JProfileOrganizer
      */
     public VProfileOrganizer(ServiceStorageConferences service, int idOrganizer) {
         initComponents();
         this.serviceConferences = service;
-        this.idOrganizer = idOrganizer; 
+        this.idOrganizer = idOrganizer;
         List<Conference> conferences = service.listConferencesByOrganizer(this.idOrganizer);
         loadConferences(conferences);
     }
-    
+
     public void loadConferences(List<Conference> conferences) {
         if (conferences.isEmpty()) {
             jPanelNoConferences.setVisible(true);
-            jPanelConferences.setVisible(false);
+            jScrollPaneConferences.setVisible(false);  // Ocultar el JScrollPane si no hay conferencias
         } else {
             jPanelNoConferences.setVisible(false);
-            jPanelConferences.setVisible(true);
+            jScrollPaneConferences.setVisible(true);  // Mostrar el JScrollPane si hay conferencias
 
-            DefaultListModel<String> model = new DefaultListModel<>();
+            // Crear un modelo de tabla personalizado
+            DefaultTableModel model = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column >= 1;  // Las columnas "Editar", "Borrar" y "Ver más..." son editables
+                }
+            };
+
+            model.addColumn("Nombre");
+            model.addColumn("Editar");  // Nueva columna para editar
+            model.addColumn("Borrar");  // Nueva columna para borrar
+            model.addColumn("Ver más...");  // Columna para "Ver más"
+
             for (Conference conf : conferences) {
-                model.addElement(conf.getName() + " - " + conf.getStartDate());
+                model.addRow(new Object[]{conf.getName(), "E", "B", "+"});
             }
-            jListConferences.setModel(model);
+
+            jTableConferences.setModel(model);
+
+            // Asignar renderizadores y editores a las nuevas columnas
+            jTableConferences.getColumnModel().getColumn(1).setCellRenderer(new ButtonRenderer());
+            jTableConferences.getColumnModel().getColumn(1).setCellEditor(new ButtonEditor(new JCheckBox(), conferences, serviceConferences, this::refreshConferencesById));
+
+            jTableConferences.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+            jTableConferences.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox(), conferences, serviceConferences, this::refreshConferencesById));
+
+            jTableConferences.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+            jTableConferences.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), conferences, serviceConferences, this::refreshConferencesById));
+
+            // Configurar el ancho de las columnas
+            jTableConferences.getColumnModel().getColumn(0).setPreferredWidth(300);
+            jTableConferences.getColumnModel().getColumn(1).setPreferredWidth(70);
+            jTableConferences.getColumnModel().getColumn(2).setPreferredWidth(70);
+            jTableConferences.getColumnModel().getColumn(3).setPreferredWidth(70);
+
+            jTableConferences.setRowHeight(40);
         }
+
     }
 
     /**
@@ -58,11 +96,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelBackground = new javax.swing.JPanel();
-        jPanelConferences = new javax.swing.JPanel();
-        jLabelLupa1 = new javax.swing.JLabel();
-        jTextFieldSearch1 = new javax.swing.JTextField();
-        jScrollPaneConferences = new javax.swing.JScrollPane();
-        jListConferences = new javax.swing.JList<>();
         jPanelNoConferences = new javax.swing.JPanel();
         jLabelNoC1 = new javax.swing.JLabel();
         jLabelNoC2 = new javax.swing.JLabel();
@@ -70,6 +103,11 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jLabelNoC4 = new javax.swing.JLabel();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelLupa = new javax.swing.JLabel();
+        jPanelConferences = new javax.swing.JPanel();
+        jLabelLupa1 = new javax.swing.JLabel();
+        jTextFieldSearch1 = new javax.swing.JTextField();
+        jScrollPaneConferences = new javax.swing.JScrollPane();
+        jTableConferences = new javax.swing.JTable();
         jPanelHeader = new javax.swing.JPanel();
         jPanelExit = new javax.swing.JPanel();
         jLabelExit = new javax.swing.JLabel();
@@ -97,35 +135,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jPanelBackground.setMaximumSize(new java.awt.Dimension(800, 500));
         jPanelBackground.setMinimumSize(new java.awt.Dimension(800, 500));
         jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanelConferences.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelConferences.setMaximumSize(new java.awt.Dimension(330, 320));
-        jPanelConferences.setMinimumSize(new java.awt.Dimension(330, 320));
-        jPanelConferences.setPreferredSize(new java.awt.Dimension(330, 320));
-        jPanelConferences.setRequestFocusEnabled(false);
-        jPanelConferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelLupa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
-        jPanelConferences.add(jLabelLupa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
-
-        jTextFieldSearch1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldSearch1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jTextFieldSearch1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextFieldSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelConferences.add(jTextFieldSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 16, 260, 26));
-
-        jScrollPaneConferences.setBackground(new java.awt.Color(255, 255, 255));
-
-        jListConferences.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPaneConferences.setViewportView(jListConferences);
-
-        jPanelConferences.add(jScrollPaneConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 310, 210));
-
-        jPanelBackground.add(jPanelConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 105, -1, -1));
 
         jPanelNoConferences.setBackground(new java.awt.Color(255, 255, 255));
         jPanelNoConferences.setMaximumSize(new java.awt.Dimension(310, 320));
@@ -178,6 +187,43 @@ public class VProfileOrganizer extends javax.swing.JFrame {
 
         jPanelBackground.add(jPanelNoConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 105, 330, -1));
 
+        jPanelConferences.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelConferences.setMaximumSize(new java.awt.Dimension(330, 320));
+        jPanelConferences.setMinimumSize(new java.awt.Dimension(330, 320));
+        jPanelConferences.setPreferredSize(new java.awt.Dimension(330, 320));
+        jPanelConferences.setRequestFocusEnabled(false);
+        jPanelConferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelLupa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
+        jPanelConferences.add(jLabelLupa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
+
+        jTextFieldSearch1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldSearch1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        jTextFieldSearch1.setForeground(new java.awt.Color(153, 153, 153));
+        jTextFieldSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelConferences.add(jTextFieldSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 16, 260, 26));
+
+        jScrollPaneConferences.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPaneConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+
+        jTableConferences.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        jTableConferences.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPaneConferences.setViewportView(jTableConferences);
+
+        jPanelConferences.add(jScrollPaneConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 310, 210));
+
+        jPanelBackground.add(jPanelConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 105, -1, -1));
+
         jPanelHeader.setBackground(new java.awt.Color(24, 17, 67));
         jPanelHeader.setPreferredSize(new java.awt.Dimension(800, 40));
         jPanelHeader.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -190,14 +236,18 @@ public class VProfileOrganizer extends javax.swing.JFrame {
                 jPanelHeaderMousePressed(evt);
             }
         });
+        jPanelHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelExit.setBackground(new java.awt.Color(24, 17, 67));
+        jPanelExit.setMaximumSize(new java.awt.Dimension(50, 70));
+        jPanelExit.setPreferredSize(new java.awt.Dimension(50, 70));
 
         jLabelExit.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabelExit.setForeground(new java.awt.Color(255, 255, 255));
         jLabelExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelExit.setText("X");
         jLabelExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabelExit.setPreferredSize(new java.awt.Dimension(40, 40));
         jLabelExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -215,16 +265,18 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jPanelExit.setLayout(jPanelExitLayout);
         jPanelExitLayout.setHorizontalGroup(
             jPanelExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExitLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(jPanelExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabelExit, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
         );
         jPanelExitLayout.setVerticalGroup(
             jPanelExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelExitLayout.createSequentialGroup()
-                .addComponent(jLabelExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(jPanelExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabelExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
         );
+
+        jPanelHeader.add(jPanelExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 0, 50, 70));
 
         jPanelMinimize.setBackground(new java.awt.Color(24, 17, 67));
 
@@ -233,7 +285,9 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jLabelMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMinimize.setText("-");
         jLabelMinimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelMinimize.setPreferredSize(new java.awt.Dimension(40, 40));
+        jLabelMinimize.setMaximumSize(new java.awt.Dimension(50, 70));
+        jLabelMinimize.setMinimumSize(new java.awt.Dimension(50, 70));
+        jLabelMinimize.setPreferredSize(new java.awt.Dimension(50, 70));
         jLabelMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelMinimizeMouseClicked(evt);
@@ -250,21 +304,22 @@ public class VProfileOrganizer extends javax.swing.JFrame {
         jPanelMinimize.setLayout(jPanelMinimizeLayout);
         jPanelMinimizeLayout.setHorizontalGroup(
             jPanelMinimizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMinimizeLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelMinimizeLayout.createSequentialGroup()
+                .addComponent(jLabelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelMinimizeLayout.setVerticalGroup(
             jPanelMinimizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMinimizeLayout.createSequentialGroup()
-                .addComponent(jLabelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabelMinimize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jPanelHeader.add(jPanelMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 72));
 
         jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelLogo.setForeground(new java.awt.Color(193, 255, 114));
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
         jLabelLogo.setText("meeting");
+        jPanelHeader.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, 72));
 
         jPanelProfile.setBackground(new java.awt.Color(24, 17, 67));
         jPanelProfile.setMaximumSize(new java.awt.Dimension(60, 18));
@@ -294,6 +349,8 @@ public class VProfileOrganizer extends javax.swing.JFrame {
             .addComponent(jLabelProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanelHeader.add(jPanelProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, 72));
+
         jPanelConferencesHeader.setBackground(new java.awt.Color(24, 17, 67));
 
         jLabelConferences.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
@@ -314,6 +371,8 @@ public class VProfileOrganizer extends javax.swing.JFrame {
             .addComponent(jLabelConferences, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanelHeader.add(jPanelConferencesHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, 72));
+
         jPanelMessages.setBackground(new java.awt.Color(24, 17, 67));
 
         jLabelMessages.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
@@ -333,40 +392,9 @@ public class VProfileOrganizer extends javax.swing.JFrame {
             .addComponent(jLabelMessages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
-        jPanelHeader.setLayout(jPanelHeaderLayout);
-        jPanelHeaderLayout.setHorizontalGroup(
-            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addComponent(jPanelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabelLogo)
-                .addGap(225, 225, 225)
-                .addComponent(jPanelProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jPanelConferencesHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jPanelMessages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jPanelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanelHeaderLayout.setVerticalGroup(
-            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanelConferencesHeader, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelLogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelProfile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanelMessages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        jPanelHeader.add(jPanelMessages, new org.netbeans.lib.awtextra.AbsoluteConstraints(642, 0, -1, 72));
 
-        jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 60));
+        jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 70));
 
         jLabelConf1.setFont(new java.awt.Font("Montserrat", 1, 48)); // NOI18N
         jLabelConf1.setForeground(new java.awt.Color(193, 255, 114));
@@ -386,6 +414,7 @@ public class VProfileOrganizer extends javax.swing.JFrame {
 
         jButtonRegister.setBackground(new java.awt.Color(34, 53, 162));
         jButtonRegister.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jButtonRegister.setForeground(new java.awt.Color(255, 255, 255));
         jButtonRegister.setText("Registra una conferencia");
         jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -409,7 +438,7 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseClicked
-        Utilities.exitApp();
+        this.dispose();
     }//GEN-LAST:event_jLabelExitMouseClicked
 
     private void jLabelExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseEntered
@@ -417,7 +446,7 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelExitMouseEntered
 
     private void jLabelExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExitMouseExited
-        Utilities.changeColorOnMouseExit(jPanelExit, jLabelExit, Utilities.AZUL_OSCURO, Color.black);
+        Utilities.changeColorOnMouseExit(jPanelExit, jLabelExit, Utilities.AZUL_OSCURO, Color.white);
     }//GEN-LAST:event_jLabelExitMouseExited
 
     private void jLabelMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseClicked
@@ -429,7 +458,7 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseEntered
 
     private void jLabelMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseExited
-        Utilities.changeColorOnMouseExit(jPanelMinimize, jLabelMinimize, Utilities.AZUL_OSCURO, Color.black);
+        Utilities.changeColorOnMouseExit(jPanelMinimize, jLabelMinimize, Utilities.AZUL_OSCURO, Color.white);
     }//GEN-LAST:event_jLabelMinimizeMouseExited
 
     private void jPanelHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelHeaderMouseDragged
@@ -441,12 +470,108 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelHeaderMousePressed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        VCreateConference createConferenceWindow = new VCreateConference(serviceConferences, idOrganizer);
+        VCreateConference createConferenceWindow = new VCreateConference(serviceConferences, idOrganizer, this::refreshConferencesById);
         createConferenceWindow.setVisible(true);
-        
-        System.out.println(serviceConferences); // Esto debe mostrar la instancia de service, no debe ser nulo
-
     }//GEN-LAST:event_jButtonRegisterActionPerformed
+
+    public void refreshConferencesById() {
+        List<Conference> conferences = serviceConferences.listConferencesByOrganizer(idOrganizer);
+        loadConferences(conferences);
+    }
+
+    
+    // Clase para renderizar un botón en la celda
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private boolean isPushed;
+        private List<Conference> conferences;
+        private ServiceStorageConferences service;  // AÃ±adir el servicio como atributo
+        private String action; // Para identificar qué botón fue presionado
+        private Runnable refreshCallback;  // El callback para refrescar la lista
+
+        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceStorageConferences service, Runnable refreshCallback) {
+            super(checkBox);
+            this.conferences = conferences;
+            this.service = service;
+            this.refreshCallback = refreshCallback;  // Inicializar el callback
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+
+            // Establecer la acción según la columna
+            if (column == 1) { // Columna "Editar"
+                action = "editar";
+            } else if (column == 2) { // Columna "Borrar"
+                action = "borrar";
+            } else if (column == 3) { // Columna "Ver más"
+                action = "ver";
+            }
+
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Obtener la conferencia seleccionada
+                Conference selectedConference = conferences.get(jTableConferences.getSelectedRow());
+
+                if (action.equals("editar")) {
+                    VUpdateConference updateWindow = new VUpdateConference(serviceConferences, idOrganizer, selectedConference, refreshCallback);
+                    updateWindow.setVisible(true);  // Mostrar la ventana para editar
+                } else if (action.equals("borrar")) {
+                    service.deleteConferenceById(selectedConference.getIdConference());
+                    if (refreshCallback != null) {
+                        refreshCallback.run();
+                    }
+                } else if (action.equals("ver")) {
+                    // Lógica para ver más detalles
+                    int idConference = selectedConference.getIdConference();
+                    VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                    infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
+                }
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -503,7 +628,6 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNoC3;
     private javax.swing.JLabel jLabelNoC4;
     private javax.swing.JLabel jLabelProfile;
-    private javax.swing.JList<String> jListConferences;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelConferences;
     private javax.swing.JPanel jPanelConferencesHeader;
@@ -514,6 +638,7 @@ public class VProfileOrganizer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelNoConferences;
     private javax.swing.JPanel jPanelProfile;
     private javax.swing.JScrollPane jScrollPaneConferences;
+    private javax.swing.JTable jTableConferences;
     private javax.swing.JTextField jTextFieldSearch;
     private javax.swing.JTextField jTextFieldSearch1;
     // End of variables declaration//GEN-END:variables
