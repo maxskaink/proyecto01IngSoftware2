@@ -4,6 +4,7 @@ import models.Article;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,15 +19,15 @@ class RepositoryArticleArrayListTest {
     }
     @Test
     void testAddArticle_Success() {
-        Article article = new Article("Article 1", 1, 1);
+        Article article = new Article("Article 1", 1, 1, "Madrugada, mañana", new Date());
         boolean result = repository.addArticle(article);
         assertTrue(result);
     }
 
     @Test
     void testAddArticle_Failure_DuplicateAuthor() {
-        Article article1 = new Article("Article 1", 1, 1);
-        Article article2 = new Article("Article 2", 1, 1);
+        Article article1 = new Article("Article 1", 1, 1,"Madrugada, mañana", new Date());
+        Article article2 = new Article("Article 2", 1, 1,"Madrugada, mañana", new Date());
         repository.addArticle(article1);
         boolean result = repository.addArticle(article2);
         assertFalse(result);
@@ -34,22 +35,22 @@ class RepositoryArticleArrayListTest {
 
     @Test
     void testAddArticle_Failure_EmptyName() {
-        Article article = new Article("", 1, 1);
+        Article article = new Article("", 1, 1,"Madrugada, mañana", new Date());
         boolean result = repository.addArticle(article);
         assertFalse(result);
     }
 
     @Test
     void testAddArticle_Failure_InvalidId() {
-        Article article = new Article("Article 1", -1, 1);
+        Article article = new Article("Article 1", -1, 1,"Madrugada, mañana", new Date());
         boolean result = repository.addArticle(article);
         assertFalse(result);
     }
 
     @Test
     void testGetArticlesByConference_Success() {
-        Article article1 = new Article("Article 1", 1, 1);
-        Article article2 = new Article("Article 2", 2, 1);
+        Article article1 = new Article("Article 1", 1, 1,"Madrugada, mañana", new Date());
+        Article article2 = new Article("Article 2", 2, 1,"Madrugada, mañana", new Date());
         repository.addArticle(article1);
         repository.addArticle(article2);
         List<Article> articles = repository.getArticlesByConference(1);
@@ -64,8 +65,8 @@ class RepositoryArticleArrayListTest {
 
     @Test
     void testGetArticleByAuthor_Success() {
-        Article article1 = new Article("Article 1", 1, 1);
-        Article article2 = new Article("Article 2", 1, 2);
+        Article article1 = new Article("Article 1", 1, 1,"Madrugada, mañana", new Date());
+        Article article2 = new Article("Article 2", 1, 2,"Madrugada, mañana", new Date());
         repository.addArticle(article1);
         repository.addArticle(article2);
         List<Article> articles = repository.getArticleByAuthor(1);

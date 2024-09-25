@@ -36,7 +36,7 @@ public class Conference {
         this.topic = topic;
         this.idConference = idConference;
         this.idOrganizer = idOrganizer;
-        this.isOpen = false;
+        this.isOpen = true;
         this.description = description;
     }
 
