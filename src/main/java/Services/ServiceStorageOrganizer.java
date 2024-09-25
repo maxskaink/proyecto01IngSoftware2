@@ -5,7 +5,7 @@ import dataAccess.interfaces.IRepositoryOrganizer;
 import models.Organizer;
 
 public class ServiceStorageOrganizer extends Subject {
-    private IRepositoryOrganizer repositoryOrganizer;
+    private final IRepositoryOrganizer repositoryOrganizer;
     public ServiceStorageOrganizer(IRepositoryOrganizer repositoryOrganizer) {
         this.repositoryOrganizer = repositoryOrganizer;
     }

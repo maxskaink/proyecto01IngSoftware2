@@ -1,8 +1,6 @@
 
 package models;
 
-
-import java.util.ArrayList;
 import java.util.Date;
 /**
  *
@@ -19,21 +17,18 @@ public class Conference {
     private int idOrganizer;
     private  boolean isOpen ;
     private String description;
-    ArrayList <Article> articles;
-    Organizer organizer;
 
     /**
      * 
-     * @param name Nombre de la conferencia 
-     * @param startDate Fecha inicio de la conferencia 
-     * @param finishDate Fecha de finalizacion de la conferencia 
-     * @param place Lugar de la conferencia
-     * @param topic Tema de la conferencia
-     * @param idConference  Atributo identificador de la conferencia (Generado en automatico)
-     * @param organizer Class organizador
+     * @param name Conference name
+     * @param startDate Started Date
+     * @param finishDate End Date
+     * @param place place of the conference
+     * @param topic main topic of the conference
+     * @param idConference id of the conference
      *
      */
-    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, Organizer organizer) {
+    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -43,11 +38,10 @@ public class Conference {
         this.idOrganizer = idOrganizer;
         this.isOpen = false;
         this.description = description;
-        this.articles = new ArrayList<Article>();
     }
 
     public Conference copy(){
-        Conference conference = new  Conference(
+        return new  Conference(
                 this.getName(),
                 this.getDescription(),
                 this.getStartDate(),
@@ -55,25 +49,19 @@ public class Conference {
                 this.getPlace(),
                 this.getTopic(),
                 this.getIdConference(),
-                this.getOrganizer().copy()
+                this.getIdOrganizer()
         );
-        for(Article articule: articles)
-            conference.addArticle(articule.copy());
-        return conference ;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Date getStartDate() {
         return startDate;
     }
-
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -105,7 +93,6 @@ public class Conference {
     public int getIdOrganizer() {
         return idOrganizer;
     }
-
     public void setIdOrganizer(int idOrganizer) {
         this.idOrganizer = idOrganizer;
     }
@@ -115,10 +102,5 @@ public class Conference {
     public String getDescription() {
         return description;
     }
-    public Organizer getOrganizer() { return this.organizer; }
-    public void setOrganizer(Organizer organizer) { this.organizer = organizer; }
     public void setDescription(String description) { this.description = description; }
-    public ArrayList<Article> getArticles() {return this.articles;}
-    public void addArticle(Article article) {this.articles.add(article);}
-    public void setArticules(ArrayList<Article> articles){this.articles = articles;}
 }

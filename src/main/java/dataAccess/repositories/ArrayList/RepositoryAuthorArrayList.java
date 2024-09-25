@@ -14,12 +14,12 @@ public class RepositoryAuthorArrayList implements IRepositoryAuthor {
     }
 
     /**
-     * @param author author to add in the reposritory
+     * @param author author to add in the repository
      * @return true if it is successfully
      */
     @Override
     public boolean addAuthor(Author author) {
-        author.setNanme( author.getName().strip());
+        author.setName( author.getName().strip());
         for(Author a : authors)
             if(a.getId() == author.getId())
                 return false;

@@ -100,4 +100,22 @@ class RepositoryConferenceArrayListTest {
         assertNull(repository.updateConference(-1, conference1));
         assertNull(repository.updateConference(conference1.getIdConference(), new Conference("","",new Date(), new Date(), "", "", 1, 1)));
     }
+    @Test
+    void testDeleteConferenceById_Success(){
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        assertTrue(repository.addConference(conference1));
+        assertNotNull(repository.deleteConferenceById(conference1.getIdConference()));
+        List<Conference> conferences = repository.getConferences();
+        assertEquals(0, conferences.size());
+    }
+    @Test
+    void testDeleteConferenceById_Failure(){
+        Conference conference1 = new Conference("Conference 1", "",new Date(), new Date(), "Place 1", "Topic 1", 1, 1);
+        assertTrue(repository.addConference(conference1));
+        assertNull(repository.deleteConferenceById(0));
+        List<Conference> conferences = repository.getConferences();
+        assertEquals(1, conferences.size());
+        Conference conference = repository.getConferenceById(conference1.getIdConference());
+        assertNotNull(conference);
+    }
 }
