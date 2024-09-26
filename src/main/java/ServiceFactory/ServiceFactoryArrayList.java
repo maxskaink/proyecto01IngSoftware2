@@ -15,9 +15,10 @@ public class ServiceFactoryArrayList implements  IServiceFactory{
     private final ServiceStorageAuthor SSAuthor;
     private final ServiceStorageConferences SSConferences;
     private final ServiceStorageOrganizer SSOrganizer;
-
+    private static ServiceFactoryArrayList instance;
 
     public ServiceFactoryArrayList(){
+
         RepositoryArticleArrayList RArticle = new RepositoryArticleArrayList();
         RepositoryAuthorArrayList RAuthor = new RepositoryAuthorArrayList();
         RepositoryConferenceArrayList RConference = new RepositoryConferenceArrayList();
@@ -27,6 +28,17 @@ public class ServiceFactoryArrayList implements  IServiceFactory{
         SSAuthor = new ServiceStorageAuthor(RAuthor);
         SSOrganizer = new ServiceStorageOrganizer(ROrganizer);
         SSArticle = new ServiceStorageArticle(RArticle, SSConferences);
+    }
+
+    /**
+     * Pattern  singleton for Factory
+     * @return
+     */
+    public static synchronized ServiceFactoryArrayList getInstance() {
+        if (instance == null) {
+            instance = new ServiceFactoryArrayList();
+        }
+        return instance;
     }
 
     /**

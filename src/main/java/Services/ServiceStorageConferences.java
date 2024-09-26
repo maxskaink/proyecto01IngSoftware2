@@ -36,7 +36,10 @@ public class ServiceStorageConferences extends Subject {
         //Valid if the date is correct logic
         else if(obj.getFinishDate().after(obj.getStartDate())){
             this.notifyObservers();
-            return this.refRepository.addConference(obj);
+            if(this.refRepository.addConference(obj)){
+                this.notifyObservers();
+                return true;
+            }else return false;
         }
 
         return false;
@@ -50,7 +53,10 @@ public class ServiceStorageConferences extends Subject {
      */
     public Conference updateConference(Conference newConference, int idConference){
         this.notifyObservers();
-        return (this.refRepository.updateConference(idConference, newConference));
+        Conference oldConference = (this.refRepository.updateConference(idConference, newConference));
+        if (oldConference != null)
+            this.notifyObservers();
+        return oldConference;
     }
 
     /**
@@ -60,7 +66,10 @@ public class ServiceStorageConferences extends Subject {
      */
     public Conference deleteConferenceById(int idConference){
         this.notifyObservers();
-        return this.refRepository.deleteConferenceById(idConference);
+        Conference conference = (this.refRepository.deleteConferenceById(idConference));
+        if (conference != null)
+            this.notifyObservers();
+        return conference;
     }
 
     /**
