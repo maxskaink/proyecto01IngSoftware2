@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ServiceStorageConferences extends Subject {
     
-    private final IRepositoryConference refRepository;
+    private  IRepositoryConference refRepository;
     
     public ServiceStorageConferences(IRepositoryConference repository){
         this.refRepository = repository;
@@ -28,11 +28,17 @@ public class ServiceStorageConferences extends Subject {
      * @return the result of operation
      */
     public boolean addConference(Conference obj) {
+
+        //valid if the id exist, if the id exist return false
+        if(this.getConferenceById(obj.getIdConference()) != null){
+            return false;
+        }
         //Valid if the date is correct logic
-        if(obj.getFinishDate().after(obj.getStartDate())){
+        else if(obj.getFinishDate().after(obj.getStartDate())){
             this.notifyObservers();
             return this.refRepository.addConference(obj);
         }
+
         return false;
     }
 
