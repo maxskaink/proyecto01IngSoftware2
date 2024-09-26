@@ -1,15 +1,24 @@
 package views;
 
 import Services.ServiceStorageArticle;
+import Services.ServiceStorageAuthor;
 import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryArticleArrayList;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
 import java.util.List;
+import javax.swing.*;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import models.Article;
+import models.Author;
 import models.Conference;
 import utilities.Utilities;
+import views.VProfileOrganizer.ButtonEditor;
+import views.VProfileOrganizer.ButtonRenderer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,18 +30,70 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VConferenceOrganizer extends javax.swing.JFrame {
-    
+     private ServiceStorageConferences serviceConference;
+     private ServiceStorageArticle serviceArticle;
+     private ServiceStorageAuthor serviceAuthor;
+     private int idConference;
     /**
      * Creates new form VLogin
      */
     public VConferenceOrganizer(ServiceStorageConferences serviceConference,ServiceStorageArticle serviceArticle ,int idConference) {
         initComponents();
+        this.serviceArticle=serviceArticle;
+        this.serviceConference=serviceConference;
+        this.idConference=idConference;
         Conference conference=serviceConference.getConferenceById(idConference);
         jLabelShownName.setText(conference.getName());
         List<Article> articles = serviceArticle.listArticlesByConferences(idConference);
         listPapers(articles);
     }   
+    public void listPapers(List<Article> Articles) {
+        if (Articles.isEmpty()) {
+            jTableNoArticles.setVisible(true);
+            jTableArticles.setVisible(false);
+        } else {
+           jTableNoArticles.setVisible(false);
+           jTableArticles.setVisible(true);
+           
+           DefaultTableModel MyTable = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column >= 1;  // Las columnas "Editar", "Borrar" y "Ver más..." son editables
+                }
+            };
+           MyTable.addColumn("Autores");
+           MyTable.addColumn("Nombre del articulo");  
+           MyTable.addColumn("Informacion");  // Nueva columna para 
+           MyTable.addColumn("Asignacion");  // Columna para "Ver más"
 
+            for (Article art : Articles) {
+                Author author=serviceAuthor.getAuthor(art.getIdAuthor());
+                String nombreAutor=author.getName();
+                MyTable.addRow(new Object[]{nombreAutor,art.getName(), "INF", "Asignacion"});
+            }
+          
+           jTableArticles.setModel(MyTable);   
+           
+        // Asignar renderizadores y editores a las columnas "Informacion" y "Asignacion"
+        jTableArticles.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+        jTableArticles.getColumnModel().getColumn(2).setCellEditor( new ButtonEditorArticles(
+                    new JCheckBox(), 
+                    Articles, 
+                    serviceArticle, 
+                    this::refreshArticlesById));
+
+        jTableArticles.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        jTableArticles.getColumnModel().getColumn(3).setCellEditor(new ButtonEditorArticles(new JCheckBox(), Articles, serviceArticle, this::refreshArticlesById));
+
+        // Configurar el ancho de las columnas
+        jTableArticles.getColumnModel().getColumn(0).setPreferredWidth(300);
+        jTableArticles.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTableArticles.getColumnModel().getColumn(2).setPreferredWidth(70);
+        jTableArticles.getColumnModel().getColumn(3).setPreferredWidth(70);
+
+            jTableArticles.setRowHeight(40);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -309,27 +370,99 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
     private void jLabelMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseClicked
         Utilities.minimizeWindow(this);
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
-    public void listPapers(List<Article> Articles) {
-        if (Articles.isEmpty()) {
-            jTableNoArticles.setVisible(true);
-            jTableArticles.setVisible(false);
-        } else {
-           jTableNoArticles.setVisible(false);
-           jTableArticles.setVisible(true);
-           DefaultTableModel MyTable=new DefaultTableModel();
-           String ids[]={"Autores","Nombre del articulo","Paper","Evaluador"};
-           MyTable.setColumnIdentifiers(ids);
-            for (Article art : Articles) {
-               MyTable.addRow(new Object[]{
-                 art.getIdAuthor(), 
-                 art.getName() 
-                // art.getPaper(), 
-                // art.getEvaluator() 
-    });
-            }
-           jTableArticles.setModel(MyTable);   
+    
+    public void refreshArticlesById() {
+        List<Article> articles = serviceArticle.listArticlesByConferences(idConference);;
+        listPapers(articles);
+    }
+
+    
+    // Clase para renderizar un botón en la celda
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
         }
     }
+
+    class ButtonEditorArticles extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private boolean isPushed;
+        private List<Article> articles;
+        private ServiceStorageArticle service;  // AÃ±adir el servicio como atributo
+        private String action; // Para identificar qué botón fue presionado
+        private Runnable refreshCallback;  // El callback para refrescar la lista
+
+        public ButtonEditorArticles(JCheckBox checkBox, List<Article> articles, ServiceStorageArticle service, Runnable refreshCallback) {
+            super(checkBox);
+            this.articles = articles;
+            this.service = service;
+            this.refreshCallback = refreshCallback;  // Inicializar el callback
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+
+            // Establecer la acción según la columna
+            if (column == 2) { // Columna "Editar"
+                action = "info";
+            } else if (column == 3) { // Columna "Borrar"
+                action = "asignae";
+            } 
+
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Obtener la conferencia seleccionada
+                Article selectedArticle = articles.get(jTableArticles.getSelectedRow());
+
+                if (action.equals("info")) {
+                // Lógica para la columna "Editar"
+                } else if (action.equals("borrar")) {
+               if (refreshCallback != null) {
+               refreshCallback.run();
+               }
+               } else if (action.equals("ver")) {
+                 // Lógica para la columna "Ver más"
+                }
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
