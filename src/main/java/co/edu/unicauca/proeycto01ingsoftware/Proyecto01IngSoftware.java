@@ -5,9 +5,9 @@
  */
 package co.edu.unicauca.proeycto01ingsoftware;
 
+import ServiceFactory.ServiceFactoryArrayList;
 import models.Conference;
 import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -21,8 +21,10 @@ public class Proyecto01IngSoftware {
 
     public static void main(String[] args) throws IOException {
         // Crear un repositorio y un servicio para manejar las conferencias
-        RepositoryConferenceArrayList repository = new RepositoryConferenceArrayList();
-        ServiceStorageConferences service = new ServiceStorageConferences(repository);
+        new ServiceFactoryArrayList();
+        ServiceFactoryArrayList serviceFactory = ServiceFactoryArrayList.getInstance();
+        ServiceStorageConferences service = serviceFactory.getServiceStorageConferences();
+
         Runnable refreshCallback = null;
 
 
@@ -57,7 +59,10 @@ public class Proyecto01IngSoftware {
        VConferenceInfo infoConference =new VConferenceInfo(service,1);
        infoConference.setVisible(true);
 
+       //Agregamos los observer
        
+       service.addObserver(window);
+       service.addObserver(profileOrganizerWindow);
 
     }
 }
