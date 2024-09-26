@@ -446,7 +446,8 @@ public class VCreateConference extends javax.swing.JFrame {
                     Conference newConference = new Conference(name, description,  startDateFormatted ,finishDateFormatted, place, theme, (serviceConferences.listConferences().size()+1), idOrganizer);
 
                     // Registrar la conferencia
-                    serviceConferences.addConference(newConference);
+                    if(!serviceConferences.addConference(newConference))
+                        throw new Exception("No se pudo agregar, compruebe el formato");
 
                     // Mostrar mensaje de éxito
                     JOptionPane.showMessageDialog(this, "Conferencia registrada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
