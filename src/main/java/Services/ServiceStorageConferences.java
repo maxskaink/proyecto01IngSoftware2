@@ -30,6 +30,7 @@ public class ServiceStorageConferences extends Subject {
     public boolean addConference(Conference obj) {
         //Valid if the date is correct logic
         if(obj.getFinishDate().after(obj.getStartDate())){
+            this.notifyObservers();
             return this.refRepository.addConference(obj);
         }
         return false;
@@ -42,6 +43,7 @@ public class ServiceStorageConferences extends Subject {
      * @return Conference updated
      */
     public Conference updateConference(Conference newConference, int idConference){
+        this.notifyObservers();
         return (this.refRepository.updateConference(idConference, newConference));
     }
 
@@ -51,6 +53,7 @@ public class ServiceStorageConferences extends Subject {
      * @return Connfence deleted
      */
     public Conference deleteConferenceById(int idConference){
+        this.notifyObservers();
         return this.refRepository.deleteConferenceById(idConference);
     }
 
@@ -64,6 +67,7 @@ public class ServiceStorageConferences extends Subject {
             throw new IllegalArgumentException("Conference not found with id: " + id);
         if (conference.isOpen())
             conference.setOpen(false);
+        this.notifyObservers();
         return conference.setOpen(true);
     }
 

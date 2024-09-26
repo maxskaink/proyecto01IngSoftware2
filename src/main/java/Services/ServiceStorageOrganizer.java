@@ -10,6 +10,7 @@ public class ServiceStorageOrganizer extends Subject {
         this.repositoryOrganizer = repositoryOrganizer;
     }
     public boolean addOrganizer(Organizer organizer) {
+        this.notifyObservers();
         return repositoryOrganizer.addOrganizer(organizer);
     }
     public Organizer getOrganizer(int id) {
