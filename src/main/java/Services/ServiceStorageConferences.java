@@ -34,13 +34,24 @@ public class ServiceStorageConferences extends Subject {
         }
         return false;
     }
-    
-    public boolean updateConference(Conference obj, int conf){
-        return (this.refRepository.updateConference(conf, obj)!=null);
+
+    /**
+     *
+     * @param newConference Conference to update
+     * @param idConference id of old conference
+     * @return Conference updated
+     */
+    public Conference updateConference(Conference newConference, int idConference){
+        return (this.refRepository.updateConference(idConference, newConference));
     }
-    
-    public boolean deleteConferenceById(int id){
-        return this.refRepository.deleteConferenceById(id)!=null;
+
+    /**
+     *
+     * @param idConference id of conference
+     * @return Connfence deleted
+     */
+    public Conference deleteConferenceById(int idConference){
+        return this.refRepository.deleteConferenceById(idConference);
     }
 
     /**
@@ -56,6 +67,10 @@ public class ServiceStorageConferences extends Subject {
         return conference.setOpen(true);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     public boolean isOpen(int id){
         return this.refRepository.getConferenceById(id).isOpen();
     }
