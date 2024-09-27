@@ -8,7 +8,13 @@ package Services;
 import PObserver.Subject;
 import models.Conference;
 import dataAccess.interfaces.IRepositoryConference;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
+
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 /**
  *
@@ -28,14 +34,23 @@ public class ServiceStorageConferences extends Subject {
      * @return the result of operation
      */
     public boolean addConference(Conference obj) {
-
+        Random random = new Random();
         //valid if the id exist, if the id exist return false
-        if(this.getConferenceById(obj.getIdConference()) != null){
+        if (this.getConferenceById(obj.getIdConference()) != null) {
             return false;
         }
+        //Genereate id
+        /**
+        SimpleDateFormat formatoDia = new SimpleDateFormat("dd");
+        String diaString = formatoDia.format(obj.getStartDate());
+        int codeDay = Integer.parseInt(diaString);
+
+        int idGenerate = obj.getIdConference()*10+ codeDay* 100 + random.nextInt(10);
+        **/
+
         //Valid if the date is correct logic
-        else if(obj.getFinishDate().after(obj.getStartDate())){
-            this.notifyObservers();
+        if(obj.getFinishDate().after(obj.getStartDate())){
+            //obj.setIdConference(idGenerate);
             if(this.refRepository.addConference(obj)){
                 this.notifyObservers();
                 return true;

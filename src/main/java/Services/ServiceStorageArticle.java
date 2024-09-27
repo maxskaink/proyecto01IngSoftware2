@@ -29,7 +29,7 @@ public class ServiceStorageArticle extends  Subject {
         Conference objConference = objServicesConference.getConferenceById(objArticle.getIdConference());
         if(objConference == null )
             return false;
-        if(!objConference.isOpen() )
+        if(objConference.isOpen() == false )
             return false;
         this.notifyObservers();
         return this.refRepository.addArticle(objArticle);
