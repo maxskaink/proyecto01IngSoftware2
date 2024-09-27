@@ -28,6 +28,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
         initComponents();
         this.serviceConferences = service;
         this.conference = service.getConferenceById(idConference);
+        this.idConference = idConference;
         mostrarDatos(conference);
         mostrarBoton(conference);
     }

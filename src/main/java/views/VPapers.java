@@ -1,5 +1,6 @@
 package views;
 
+import ServiceFactory.ServiceFactoryArrayList;
 import Services.ServiceStorageConferences;
 import Services.ServiceStorageArticle;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
@@ -31,8 +32,10 @@ public class VPapers extends javax.swing.JFrame {
      */
     public VPapers(ServiceStorageConferences service,int idConference) {
         initComponents();
+        serviceArticle = ServiceFactoryArrayList.getInstance().getServiceStorageArticle();
         Conference conference=service.getConferenceById(idConference);
         jLabelShownName.setText(conference.getName());
+        this.idConference = idConference;
     }
 
     /**
