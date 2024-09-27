@@ -446,7 +446,7 @@ public class VUpdateConference extends javax.swing.JFrame {
                     finishDateFormatted = formatter.parse(finishDate);
 
                     // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name,"d",  startDateFormatted ,finishDateFormatted, place, theme, this.conference.getIdConference(), idOrganizer);
+                    Conference newConference = new Conference(name,description,  startDateFormatted ,finishDateFormatted, place, theme, this.conference.getIdConference(), idOrganizer);
                     
                     // Editar la conferencia
                     if(serviceConferences.updateConference(newConference, conference.getIdConference()) == null)
@@ -485,6 +485,7 @@ public class VUpdateConference extends javax.swing.JFrame {
         jTextFieldFinishDate.setText(formatter.format(conference.getFinishDate())); 
         jTextFieldPlace.setText(conference.getPlace());
         jTextFieldTheme.setText(conference.getTopic());
+        jTextFieldDescription.setText(conference.getDescription());
     }
     
     private void jTextFieldNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNameMousePressed
