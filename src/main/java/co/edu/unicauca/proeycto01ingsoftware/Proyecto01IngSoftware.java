@@ -55,9 +55,6 @@ public class Proyecto01IngSoftware {
         VProfileOrganizer profileOrganizerWindow = new VProfileOrganizer(service, 100);
         profileOrganizerWindow.setVisible(true);
 
-        //Crear la ventana VConferenceInfo ,pasar el servidor y hacerla visible
-       VConferenceInfo infoConference =new VConferenceInfo(service,1);
-       infoConference.setVisible(true);
 
        //Agregamos los observer
        

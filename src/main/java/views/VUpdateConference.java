@@ -446,10 +446,11 @@ public class VUpdateConference extends javax.swing.JFrame {
                     finishDateFormatted = formatter.parse(finishDate);
 
                     // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name,"d",  startDateFormatted ,finishDateFormatted, place, theme, 1, idOrganizer);
+                    Conference newConference = new Conference(name,"d",  startDateFormatted ,finishDateFormatted, place, theme, this.conference.getIdConference(), idOrganizer);
                     
                     // Editar la conferencia
-                    serviceConferences.updateConference(newConference, conference.getIdConference());
+                    if(serviceConferences.updateConference(newConference, conference.getIdConference()) == null)
+                        throw new Exception("No se pudo actualizar");
 
                     if (refreshCallback != null) {
                         refreshCallback.run();  // Ejecutamos el método de refresco

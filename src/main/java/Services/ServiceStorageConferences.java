@@ -67,7 +67,7 @@ public class ServiceStorageConferences extends Subject {
      * @return Conference updated
      */
     public Conference updateConference(Conference newConference, int idConference){
-        this.notifyObservers();
+
         Conference oldConference = (this.refRepository.updateConference(idConference, newConference));
         if (oldConference != null)
             this.notifyObservers();
