@@ -17,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
 import models.Conference;
 import utilities.Utilities;
 import PObserver.Observer;
+import Services.ServiceStorageArticle;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -27,14 +28,18 @@ import PObserver.Observer;
  */
 public class VConferencesV2 extends javax.swing.JFrame implements Observer{
     private ServiceStorageConferences service;
+     private ServiceStorageArticle serviceArticle;
     private List<Conference> conferenceList;
     private Runnable refreshCallback; 
+    private int idAuthor;
 
     /**
      * Creates new form VLogin
      */
-    public VConferencesV2(ServiceStorageConferences service, Runnable refreshCallback) {
+    public VConferencesV2(ServiceStorageConferences service,ServiceStorageArticle serviceArticle,int idAuthor, Runnable refreshCallback) {
         this.service = service;
+        this.serviceArticle=serviceArticle;
+        this.idAuthor=idAuthor;
         this.refreshCallback = refreshCallback;
         initComponents();
         List<Conference> conferences = service.listConferences();
@@ -446,7 +451,7 @@ public class VConferencesV2 extends javax.swing.JFrame implements Observer{
                 int idConference = selectedConference.getIdConference();
 
                 // Abrir la ventana VConferenceInfo con el service y el idConference
-                VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, idConference,idAuthor);
                 infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
             }
             isPushed = false;

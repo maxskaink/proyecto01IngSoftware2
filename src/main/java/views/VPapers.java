@@ -25,17 +25,21 @@ import utilities.Utilities;
  */
 public class VPapers extends javax.swing.JFrame {
     private int idConference;
+    private int idAuthor;
     private ServiceStorageConferences serviceConferences;
     private ServiceStorageArticle serviceArticle;
     /**
      * Creates new form VLogin
      */
-    public VPapers(ServiceStorageConferences service,int idConference) {
+    public VPapers(ServiceStorageConferences service,ServiceStorageArticle serviceArticle,int idConference,int idAuthor) {
         initComponents();
+        this.serviceConferences=service;
+        this.serviceArticle=serviceArticle;
+        this.idAuthor=idAuthor;
+        this.idConference=idConference;
         serviceArticle = ServiceFactoryArrayList.getInstance().getServiceStorageArticle();
         Conference conference=service.getConferenceById(idConference);
         jLabelShownName.setText(conference.getName());
-        this.idConference = idConference;
     }
 
     /**
@@ -482,7 +486,7 @@ public class VPapers extends javax.swing.JFrame {
                 // Formatear la fecha de publicacion
                 Date = formatter.parse(DateWrite);
                 // Crear un nuevo objeto Article con las fechas formateada
-                  Article newArticle= null;//new Article(name,Autors,KeyWords,Date,Resumen,Archive,idConference);
+                  Article newArticle= new Article(name,idAuthor,idConference,KeyWords,Date);
                    // Registrar la conferencia
                     serviceArticle.addArticle(newArticle);
                     // Mostrar mensaje de éxito
@@ -499,43 +503,8 @@ public class VPapers extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VPapers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-      
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ServiceStorageConferences service = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                int idConference = 1;
-                new VPapers(service, 1).setVisible(true);
-            }
-        });
-    }
+   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jBackground;

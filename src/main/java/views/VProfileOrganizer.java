@@ -560,8 +560,8 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
                 } else if (action.equals("ver")) {
                     // Lógica para ver más detalles
                     int idConference = selectedConference.getIdConference();
-                    VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
-                    infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
+                   // VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                    //infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
                 }
             }
             isPushed = false;

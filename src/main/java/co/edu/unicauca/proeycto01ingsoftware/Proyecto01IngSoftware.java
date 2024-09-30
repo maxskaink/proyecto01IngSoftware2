@@ -7,7 +7,11 @@ package co.edu.unicauca.proeycto01ingsoftware;
 
 import ServiceFactory.ServiceFactoryArrayList;
 import models.Conference;
+import models.Article;
+import models.Author;
 import Services.ServiceStorageConferences;
+import Services.ServiceStorageArticle;
+import Services.ServiceStorageAuthor;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -24,7 +28,8 @@ public class Proyecto01IngSoftware {
         new ServiceFactoryArrayList();
         ServiceFactoryArrayList serviceFactory = ServiceFactoryArrayList.getInstance();
         ServiceStorageConferences service = serviceFactory.getServiceStorageConferences();
-
+        ServiceStorageArticle serviceArticle= serviceFactory.getServiceStorageArticle();
+        ServiceStorageAuthor serviceAuthor=serviceFactory.getServiceStorageAuthor();
         Runnable refreshCallback = null;
 
 
@@ -41,11 +46,16 @@ public class Proyecto01IngSoftware {
         boolean added4 = service.addConference(new Conference("Conferencia 4","food", startDate, finishDate, "Lugar 4", "Tema 4", 4, 103));
         boolean added5 = service.addConference(new Conference("Conferencia 5","food", startDate , finishDate, "Lugar 5", "Tema 5", 5, 104));
         boolean added6 = service.addConference(new Conference("Conferencia 6", "food",startDate,  finishDate, "Lugar 6", "Tema 6", 6, 105));
-
+        boolean added7=serviceArticle.addArticle(new Article ("Artilce 1",1,101,"keywords",startDate));
+        boolean added8=serviceArticle.addArticle(new Article ("Artilce 2",2,101,"keywords",startDate));
+        boolean added9=serviceAuthor.addAuthor(new Author ("Author 1",1));
+        boolean added10=serviceAuthor.addAuthor(new Author ("Author 2",2));
+        boolean added11=serviceAuthor.addAuthor(new Author ("Author 3",3));
+        
         List<Conference> conferences = service.listConferences();
 
         // Crear la ventana y hacerla visible
-        VConferencesV2 window = new VConferencesV2(service, refreshCallback);
+        VConferencesV2 window = new VConferencesV2(service,serviceArticle,3, refreshCallback);
         window.setVisible(true);
         for (Conference c : conferences) {
             System.out.println("Conferencia: " + c.getName() + ", Lugar: " + c.getPlace() + ", Tema: " + c.getTopic());

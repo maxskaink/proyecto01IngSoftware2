@@ -1,4 +1,5 @@
 package views;
+import Services.ServiceStorageArticle;
 import Services.ServiceStorageConferences;
 import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
@@ -17,16 +18,20 @@ import models.Conference;
  */
 public class VConferenceInfo extends javax.swing.JFrame {
     private int idConference;
+    private int idAuthor;
     private Conference conference;
     private ServiceStorageConferences serviceConferences;
+    private ServiceStorageArticle serviceArticle;
     
     /**
      * Creates new form 
      */
    
-    public VConferenceInfo(ServiceStorageConferences service,int idConference) {
+    public VConferenceInfo(ServiceStorageConferences service,ServiceStorageArticle serviceArticle,int idConference,int idAuthor) {
         initComponents();
         this.serviceConferences = service;
+        this.serviceArticle=serviceArticle;
+        this.idAuthor=idAuthor;
         this.conference = service.getConferenceById(idConference);
         this.idConference = idConference;
         mostrarDatos(conference);
@@ -388,25 +393,11 @@ public class VConferenceInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
     private void jButtonIsOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsOpenActionPerformed
-        VPapers createPaperWindow = new VPapers(serviceConferences, idConference);
+        VPapers createPaperWindow = new VPapers(serviceConferences,serviceArticle, idConference,idAuthor);
         createPaperWindow.setVisible(true); 
         this.setVisible(false);
     }//GEN-LAST:event_jButtonIsOpenActionPerformed
- 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-       
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ServiceStorageConferences service = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                int idConference = 1;
-                new VConferenceInfo(service, 1).setVisible(true);
-            }
-        });
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonIsOpen;
